@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS applications (
   no_bpjs_kesehatan VARCHAR(40),
   darurat_nama VARCHAR(120),
   darurat_hubungan VARCHAR(60),
+  darurat_telepon VARCHAR(30),
 
   -- SECTION B: LINGKUNGAN KELUARGA
   status_perkawinan ENUM('Menikah','Belum Menikah'),

@@ -469,7 +469,6 @@ function StepDataPribadi({ formData, updateField, files, setFiles }: any) {
 
       <SectionCard icon="map-pin" title="Alamat & Kontak" subtitle="Alamat tinggal dan cara menghubungi kamu">
         <TextAreaInput label="Alamat sesuai KTP" name="alamat_ktp" value={formData.alamat_ktp} onChange={(v) => updateField('alamat_ktp', v)} />
-        <TextInput label="Telepon KTP" name="telepon_ktp" value={formData.telepon_ktp} onChange={(v) => updateField('telepon_ktp', v)} format="phone" />
         <TextAreaInput label="Alamat Domisili" name="alamat_domisili" value={formData.alamat_domisili} onChange={(v) => updateField('alamat_domisili', v)} />
         <TextInput label="Telepon Domisili" name="telepon_domisili" value={formData.telepon_domisili} onChange={(v) => updateField('telepon_domisili', v)} format="phone" />
         <div className="field-row">
@@ -492,9 +491,10 @@ function StepDataPribadi({ formData, updateField, files, setFiles }: any) {
         </div>
         <TextInput label="No. SIM" name="no_sim" value={formData.no_sim} onChange={(v) => updateField('no_sim', v)} />
         <TextInput label="No. BPJS Kesehatan" name="no_bpjs_kesehatan" value={formData.no_bpjs_kesehatan} onChange={(v) => updateField('no_bpjs_kesehatan', v)} />
-        <div className="field-row">
+        <div className="field-row-3">
           <TextInput label="Nama Kontak Darurat" name="darurat_nama" value={formData.darurat_nama} onChange={(v) => updateField('darurat_nama', v)} />
           <TextInput label="Hubungan Kontak Darurat" name="darurat_hubungan" value={formData.darurat_hubungan} onChange={(v) => updateField('darurat_hubungan', v)} />
+          <TextInput label="Telepon Kontak Darurat" name="darurat_telepon" type="tel" value={formData.darurat_telepon} onChange={(v) => updateField('darurat_telepon', v)} format="phone" />
         </div>
       </SectionCard>
 

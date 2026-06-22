@@ -37,6 +37,7 @@ const DEFAULT_FORM_DATA: Record<string, any> = {
   no_bpjs_kesehatan: '',
   darurat_nama: '',
   darurat_hubungan: '',
+  darurat_telepon: '',
   status_perkawinan: 'Belum Menikah',
   keluarga_inti: [
     { status: 'Suami / Istri', nama: '', lp: '', ttl_umur: '', pendidikan: '', pekerjaan: '', jenis_perusahaan: '', jabatan: '' },

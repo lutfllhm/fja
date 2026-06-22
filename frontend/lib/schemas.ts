@@ -33,6 +33,7 @@ export const sectionASchema = z.object({
   no_bpjs_kesehatan: z.string().optional(),
   darurat_nama: z.string().optional(),
   darurat_hubungan: z.string().optional(),
+  darurat_telepon: z.string().optional(),
 });
 
 // Section B: Keluarga

@@ -94,7 +94,7 @@ const INSERT_COLUMNS = [
   'posisi_dilamar', 'nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'agama', 'jenis_kelamin',
   'gol_darah', 'no_ktp', 'no_npwp', 'alamat_ktp', 'telepon_ktp', 'alamat_domisili', 'telepon_domisili',
   'nomor_hp', 'no_whatsapp', 'email', 'facebook', 'twitter', 'instagram', 'sosmed_lainnya',
-  'tinggi_badan', 'berat_badan', 'no_sim', 'no_bpjs_kesehatan', 'darurat_nama', 'darurat_hubungan',
+  'tinggi_badan', 'berat_badan', 'no_sim', 'no_bpjs_kesehatan', 'darurat_nama', 'darurat_hubungan', 'darurat_telepon',
   'status_perkawinan', 'keluarga_inti', 'keluarga_asal', 'pendidikan',
   'sakit_lama', 'sakit_lama_nama', 'sakit_lama_akibat', 'kecelakaan_berat', 'kecelakaan_nama', 'kecelakaan_akibat',
   'bahasa', 'komputer', 'keterampilan_lain', 'pekerjaan',

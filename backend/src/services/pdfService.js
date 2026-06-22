@@ -346,6 +346,11 @@ async function fillPdf(applicationData) {
   if (flatData.jenis_kelamin) {
     flatData.jenis_kelamin = JENIS_KELAMIN_LABELS[flatData.jenis_kelamin] || flatData.jenis_kelamin;
   }
+  if (flatData.darurat_telepon) {
+    flatData.darurat_hubungan = flatData.darurat_hubungan
+      ? `${flatData.darurat_hubungan} / ${flatData.darurat_telepon}`
+      : flatData.darurat_telepon;
+  }
 
   Object.entries(PDF_COORDS).forEach(([key, coord]) => {
     const page = pages[coord.page];

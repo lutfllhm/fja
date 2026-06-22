@@ -34,6 +34,7 @@ const applicationSchema = z.object({
   no_bpjs_kesehatan: z.string().optional(),
   darurat_nama: z.string().optional(),
   darurat_hubungan: z.string().optional(),
+  darurat_telepon: z.string().optional(),
 
   // SECTION B: LINGKUNGAN KELUARGA
   status_perkawinan: optionalEnum(['Menikah', 'Belum Menikah']),
