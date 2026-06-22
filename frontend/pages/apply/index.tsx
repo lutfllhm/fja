@@ -159,6 +159,57 @@ function SelectInput({ label, name, options, value, onChange }: SelectInputProps
   );
 }
 
+interface SelectWithOtherInputProps {
+  label: string;
+  name: string;
+  options: string[];
+  value: any;
+  onChange: (value: any) => void;
+  required?: boolean;
+}
+
+function SelectWithOtherInput({ label, name, options, value, onChange, required }: SelectWithOtherInputProps) {
+  const isOther = !!value && !options.includes(value);
+  const [selected, setSelected] = useState(isOther ? 'Lainnya' : value || '');
+
+  const handleSelectChange = (val: string) => {
+    setSelected(val);
+    onChange(val === 'Lainnya' ? '' : val);
+  };
+
+  return (
+    <div>
+      <label className="field-label">
+        {label}
+        {required && <span className="required">*</span>}
+      </label>
+      <select
+        name={name}
+        value={selected}
+        onChange={(e) => handleSelectChange(e.target.value)}
+        className="form-select"
+      >
+        <option value="">-- Pilih --</option>
+        {options.map((opt) => (
+          <option key={opt} value={opt}>
+            {opt}
+          </option>
+        ))}
+        <option value="Lainnya">Lainnya</option>
+      </select>
+      {selected === 'Lainnya' && (
+        <input
+          type="text"
+          placeholder={`Tulis ${label.toLowerCase()} kamu`}
+          value={value || ''}
+          onChange={(e) => onChange(e.target.value)}
+          className={`form-input mt-1.5 ${value ? 'filled' : ''}`}
+        />
+      )}
+    </div>
+  );
+}
+
 interface PillSelectProps {
   label: string;
   value: any;
@@ -396,7 +447,13 @@ function StepDataPribadi({ formData, updateField, files, setFiles }: any) {
           <TextInput label="Tanggal Lahir" name="tanggal_lahir" type="date" value={formData.tanggal_lahir} onChange={(v) => updateField('tanggal_lahir', v)} />
         </div>
         <div className="field-row-3">
-          <TextInput label="Agama" name="agama" value={formData.agama} onChange={(v) => updateField('agama', v)} />
+          <SelectWithOtherInput
+            label="Agama"
+            name="agama"
+            options={['Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu']}
+            value={formData.agama}
+            onChange={(v) => updateField('agama', v)}
+          />
           <SelectInput
             label="Jenis Kelamin"
             name="jenis_kelamin"
