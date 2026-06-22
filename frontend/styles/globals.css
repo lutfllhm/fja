@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #F5F6FA;
+  color: #1F2937;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gold-500 text-white border-none rounded-md px-6 py-3 text-sm font-medium cursor-pointer inline-flex items-center gap-2 transition-all duration-150;
+  }
+  .btn-primary:hover {
+    @apply bg-gold-600;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(226, 35, 26, 0.25);
+  }
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+  .btn-primary:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-text-secondary border-[0.5px] border-border-hover rounded-md px-5 py-3 text-sm inline-flex items-center gap-2 transition-colors duration-150;
+  }
+  .btn-secondary:hover {
+    @apply bg-surface-input;
+  }
+  .btn-secondary:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  .btn-accent {
+    @apply bg-navy-800 text-white border-none rounded-md px-6 py-3 text-sm font-semibold inline-flex items-center gap-2 transition-colors duration-150;
+  }
+  .btn-accent:hover {
+    @apply bg-navy-700;
+  }
+
+  .form-input,
+  .form-textarea,
+  .form-select {
+    @apply w-full bg-surface-input border-[0.5px] border-border-light rounded-md text-sm text-text-primary transition-all duration-150 outline-none;
+  }
+  .form-input,
+  .form-select {
+    height: 42px;
+    padding: 0 14px;
+  }
+  .form-textarea {
+    padding: 10px 14px;
+    resize: vertical;
+    min-height: 80px;
+  }
+  .form-input:hover,
+  .form-textarea:hover,
+  .form-select:hover {
+    @apply border-border-hover;
+  }
+  .form-input:focus,
+  .form-textarea:focus,
+  .form-select:focus {
+    @apply border-border-focus bg-white shadow-focus;
+  }
+  .form-input.filled {
+    @apply bg-white border-border-light;
+  }
+  .form-input.error,
+  .form-textarea.error {
+    border-color: #FCA5A5;
+    background: #FFF5F5;
+  }
+
+  .field-label {
+    @apply block text-sm font-medium text-text-secondary mb-1.5 tracking-[0.2px];
+  }
+  .field-label .required {
+    color: #DC2626;
+    margin-left: 2px;
+  }
+
+  .field-error {
+    @apply text-xs text-[#DC2626] mt-1 flex items-center gap-1;
+  }
+
+  .field-row {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-3;
+  }
+  .field-row-3 {
+    @apply grid grid-cols-1 sm:grid-cols-3 gap-3;
+  }
+
+  .upload-zone {
+    @apply border-[1.5px] border-dashed border-border-hover rounded-lg p-4 text-center bg-surface-input cursor-pointer transition-all duration-150;
+  }
+  .upload-zone:hover {
+    @apply border-gold-500 bg-gold-100;
+  }
+
+  .section-card {
+    @apply bg-surface-card border-[0.5px] border-border-light rounded-lg shadow-card overflow-hidden transition-shadow duration-200;
+  }
+  .section-card:hover {
+    @apply shadow-card-hover;
+  }
+
+  .section-card-header {
+    @apply flex items-center gap-3 border-l-[3px] border-gold-500;
+    padding: 18px 20px 16px;
+  }
+  .section-card-icon {
+    @apply w-10 h-10 rounded-md bg-gold-100 flex items-center justify-center flex-shrink-0;
+  }
+  .section-card-icon i {
+    @apply text-lg text-gold-500;
+  }
+  .section-card-body {
+    padding: 18px 20px;
+  }
+
+  .pill {
+    @apply px-[9px] py-[3px] rounded-pill text-[10px] font-medium border border-border-light text-text-secondary bg-white cursor-pointer transition-all duration-150;
+  }
+  .pill.active {
+    @apply bg-navy-800 text-gold-500 border-navy-800;
+  }
+  .pill:hover:not(.active) {
+    @apply border-gold-500 text-gold-600;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 px-[9px] py-[3px] rounded-pill text-xs font-medium;
+    font-size: 10.5px;
+  }
+
+  .action-btn {
+    @apply w-7 h-7 rounded-sm border-[0.5px] border-border-light bg-white flex items-center justify-center cursor-pointer transition-all duration-150;
+  }
+  .action-btn:hover {
+    @apply border-gold-500 bg-gold-100;
+  }
+  .action-btn:hover i {
+    @apply text-gold-600;
+  }
+
+  .dynamic-table {
+    @apply w-full border-collapse;
+    font-size: 11.5px;
+  }
+  .dynamic-table th {
+    @apply font-semibold uppercase tracking-wide text-text-muted bg-[#FAFAFA] border-b-[0.5px] border-border-light text-left;
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+  }
+  .dynamic-table td {
+    @apply border-b-[0.5px] border-surface-subtle align-middle;
+    padding: 6px 10px;
+  }
+  .btn-add-row {
+    @apply border border-dashed border-gold-500 text-gold-600 bg-gold-100 rounded-md px-3 py-1.5 text-xs font-medium cursor-pointer transition-all duration-150 self-start;
+  }
+  .btn-add-row:hover {
+    @apply bg-gold-400 bg-opacity-30;
+  }
+
+  .admin-table {
+    @apply w-full border-collapse text-sm;
+  }
+  .admin-table th {
+    @apply font-semibold uppercase tracking-wide text-text-muted bg-[#FAFAFA] border-b-[0.5px] border-border-light text-left;
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    padding: 12px 20px;
+  }
+  .admin-table td {
+    @apply border-b-[0.5px] border-surface-subtle align-middle;
+    padding: 13px 20px;
+  }
+  .admin-table tr:hover td {
+    @apply bg-surface-input;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .step-content {
+    animation: fadeSlideIn 0.25s ease-out;
+  }
+  .toast-enter {
+    animation: slideUp 0.3s ease-out;
+  }
+}
