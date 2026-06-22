@@ -16,7 +16,7 @@ const STEPS = [
   'Kesehatan',
   'Bahasa',
   'Keterampilan',
-  'Pekerjaan',
+  'Riwayat Pekerjaan',
   'Minat',
   'Lain-lain',
   'Penutup',
