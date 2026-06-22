@@ -68,7 +68,7 @@ export default function ProgressStepper({
                     {done ? <i className="ti ti-check" /> : stepNum}
                   </div>
                   <span
-                    className={`mt-2 text-[11px] text-center max-w-[90px] hidden sm:block ${
+                    className={`mt-2 text-[11px] text-center max-w-[72px] hidden sm:block ${
                       done
                         ? 'text-gold-500'
                         : active
