@@ -677,8 +677,8 @@ function StepPekerjaan({ formData, updateField }: any) {
             <TextInput label="Nama Perusahaan" name="nama_perusahaan" value={entry.nama_perusahaan} onChange={(v) => updateEntry(index, { ...entry, nama_perusahaan: v })} />
             <TextInput label="Lokasi" name="lokasi" value={entry.lokasi} onChange={(v) => updateEntry(index, { ...entry, lokasi: v })} />
             <TextInput label="Jabatan" name="jabatan" value={entry.jabatan} onChange={(v) => updateEntry(index, { ...entry, jabatan: v })} />
-            <TextInput label="Tanggal Masuk" name="tgl_masuk" type="date" value={entry.tgl_masuk} onChange={(v) => updateEntry(index, { ...entry, tgl_masuk: v })} />
-            <TextInput label="Tanggal Keluar" name="tgl_keluar" type="date" value={entry.tgl_keluar} onChange={(v) => updateEntry(index, { ...entry, tgl_keluar: v })} description="(kosongkan jika masih aktif bekerja)" />
+            <TextInput label="Tanggal Masuk" name="tgl_masuk" type="date" value={entry.tgl_masuk} onChange={(v) => updateEntry(index, { ...entry, tgl_masuk: v })} description="(Tanggal awal mulai bekerja di perusahaan sebelumnya)" />
+            <TextInput label="Tanggal Keluar" name="tgl_keluar" type="date" value={entry.tgl_keluar} onChange={(v) => updateEntry(index, { ...entry, tgl_keluar: v })} description="(Tanggal berhenti bekerja / resign, kosongkan jika masih aktif)" />
           </div>
           <TextAreaInput label="Uraian Pekerjaan" name="uraian" value={entry.uraian} onChange={(v) => updateEntry(index, { ...entry, uraian: v })} />
           <div className="field-row">
