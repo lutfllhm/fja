@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 const FEATURES = [
   { icon: 'forms', title: 'Formulir Lengkap', desc: 'Data diri, riwayat sekolah, pekerjaan, dan lainnya dalam satu formulir' },
   { icon: 'file-export', title: 'Unduh PDF & CSV', desc: 'Data yang sudah diisi bisa diunduh dalam format PDF atau CSV' },
-  { icon: 'shield-check', title: 'Data Aman', desc: 'Data karyawan tersimpan dengan enkripsi dan hanya bisa diakses admin' },
+  { icon: 'bolt', title: 'Proses Instan', desc: 'Lamaran langsung terkirim dan diproses oleh tim HRD secara real-time' },
 ];
 
 const KETENTUAN_LIST = [
