@@ -64,9 +64,10 @@ interface TextInputProps {
   onChange: (value: any) => void;
   required?: boolean;
   format?: FieldFormat;
+  description?: string;
 }
 
-function TextInput({ label, name, type = 'text', placeholder, value, onChange, required, format }: TextInputProps) {
+function TextInput({ label, name, type = 'text', placeholder, value, onChange, required, format, description }: TextInputProps) {
   const [error, setError] = useState('');
 
   const validate = (val: string) => {
@@ -80,10 +81,15 @@ function TextInput({ label, name, type = 'text', placeholder, value, onChange, r
 
   return (
     <div>
-      <label className="field-label">
+      <label className="field-label mb-0.5">
         {label}
         {required && <span className="required">*</span>}
       </label>
+      {description && (
+        <p className="text-text-muted mb-1" style={{ fontSize: 11, marginTop: -2 }}>
+          {description}
+        </p>
+      )}
       <input
         type={type}
         name={name}
@@ -672,7 +678,7 @@ function StepPekerjaan({ formData, updateField }: any) {
             <TextInput label="Lokasi" name="lokasi" value={entry.lokasi} onChange={(v) => updateEntry(index, { ...entry, lokasi: v })} />
             <TextInput label="Jabatan" name="jabatan" value={entry.jabatan} onChange={(v) => updateEntry(index, { ...entry, jabatan: v })} />
             <TextInput label="Tanggal Masuk" name="tgl_masuk" type="date" value={entry.tgl_masuk} onChange={(v) => updateEntry(index, { ...entry, tgl_masuk: v })} />
-            <TextInput label="Tanggal Keluar" name="tgl_keluar" type="date" value={entry.tgl_keluar} onChange={(v) => updateEntry(index, { ...entry, tgl_keluar: v })} />
+            <TextInput label="Tanggal Keluar" name="tgl_keluar" type="date" value={entry.tgl_keluar} onChange={(v) => updateEntry(index, { ...entry, tgl_keluar: v })} description="(kosongkan jika masih aktif bekerja)" />
           </div>
           <TextAreaInput label="Uraian Pekerjaan" name="uraian" value={entry.uraian} onChange={(v) => updateEntry(index, { ...entry, uraian: v })} />
           <div className="field-row">
