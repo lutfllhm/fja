@@ -132,7 +132,7 @@ export default function Home() {
             </div>
             <h3 className="text-lg font-semibold text-text-primary mb-2">Informasi Penggunaan Aplikasi</h3>
             <p className="text-text-secondary text-sm leading-relaxed max-w-2xl mx-auto">
-              Aplikasi ini merupakan sistem internal PT Raba Bina Mandiri (RBM) yang digunakan khusus untuk memproses pendaftaran dan pengelolaan data calon karyawan secara digital. Seluruh informasi yang diinputkan akan tersimpan secara aman dalam database perusahaan dan diproses oleh tim HRD.
+              Aplikasi ini merupakan sistem internal CV Rajawali Bina Maju (RBM) yang digunakan khusus untuk memproses pendaftaran dan pengelolaan data calon karyawan secara digital. Seluruh informasi yang diinputkan akan tersimpan secara aman dalam database perusahaan dan diproses oleh tim HRD.
             </p>
           </div>
         </div>
