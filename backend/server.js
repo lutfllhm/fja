@@ -16,6 +16,7 @@ const pool = require('./db');
 const { fillPdf } = require('./src/services/pdfService');
 const { generateCsvString, generateBulkCsvString } = require('./src/services/csvService');
 const { login } = require('./src/services/adminService');
+const { runMigrations } = require('./src/services/migrationService');
 const authMiddleware = require('./src/middleware/auth');
 const { applicationSchema, loginSchema, statusUpdateSchema } = require('./src/schemas/validations');
 
@@ -175,7 +176,7 @@ app.post('/api/applications', submitLimiter, uploadFields, async (req, res) => {
       return res.status(400).json({ error: 'Data tidak valid', details: error.errors });
     }
     console.error(error);
-    res.status(500).json({ error: 'Tidak dapat menyimpan data aplikasi.' });
+    res.status(500).json({ error: 'Tidak dapat menyimpan data aplikasi.', details: error.message });
   }
 });
 
@@ -356,8 +357,9 @@ app.get('/api/applications/:id/pdf', authMiddleware, async (req, res) => {
   }
 });
 
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, async () => {
   console.log(`Backend berjalan di http://localhost:${PORT}`);
+  await runMigrations();
 });
 
 server.on('error', (err) => {
