@@ -3,12 +3,6 @@ import Layout from '@/components/Layout';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 
-const FEATURES = [
-  { icon: 'forms', title: 'Formulir Lengkap', desc: 'Data diri, riwayat sekolah, pekerjaan, dan lainnya dalam satu formulir' },
-  { icon: 'file-export', title: 'Unduh PDF & CSV', desc: 'Data yang sudah diisi bisa diunduh dalam format PDF atau CSV' },
-  { icon: 'bolt', title: 'Proses Instan', desc: 'Lamaran langsung terkirim dan diproses oleh tim HRD secara real-time' },
-];
-
 const KETENTUAN_LIST = [
   'Pastikan seluruh data yang diisikan adalah benar, lengkap, akurat, dan sesuai dengan kondisi yang sebenarnya.',
   'Seluruh informasi yang diberikan harus dapat dipertanggungjawabkan. Dengan mengirimkan formulir ini, Anda menyatakan bahwa data yang disampaikan merupakan data yang sah dan valid.',
@@ -123,37 +117,23 @@ export default function Home() {
         </div>
 
         <div className="border-t border-border-light pt-12">
-          <div className="text-center mb-10">
-            <h3 className="text-2xl text-text-primary font-semibold mb-2">Yang Bisa Dilakukan di Sini</h3>
-            <p className="text-text-secondary text-sm">Beberapa hal yang bisa kamu lakukan lewat sistem ini</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {FEATURES.map((feature, idx) => (
-              <div
-                key={idx}
-                className="section-card p-6 text-center animate-scaleIn group hover:shadow-card-hover hover:-translate-y-1 transition-all duration-200"
-                style={{ animationDelay: `${160 + idx * 90}ms` }}
-              >
-                <div className="relative mx-auto mb-4 flex items-center justify-center" style={{ width: 48, height: 48 }}>
-                  <div
-                    className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ background: 'radial-gradient(circle, rgba(226,35,26,0.12), transparent 70%)' }}
-                  />
-                  <i
-                    className={`ti ti-${feature.icon} relative transition-transform duration-200 group-hover:scale-110 group-hover:-translate-y-0.5`}
-                    style={{
-                      fontSize: 34,
-                      backgroundImage: 'linear-gradient(135deg, #E2231A, #B91C1C)',
-                      WebkitBackgroundClip: 'text',
-                      backgroundClip: 'text',
-                      color: 'transparent',
-                    }}
-                  />
-                </div>
-                <h4 className="text-sm font-semibold text-text-primary mb-1.5">{feature.title}</h4>
-                <p className="text-text-secondary text-sm leading-relaxed">{feature.desc}</p>
-              </div>
-            ))}
+          <div className="section-card p-6 sm:p-8 max-w-3xl mx-auto text-center hover:shadow-card transition-shadow duration-300">
+            <div className="mx-auto mb-4 flex items-center justify-center rounded-full" style={{ width: 56, height: 56, background: 'rgba(226,35,26,0.08)' }}>
+              <i
+                className="ti ti-info-circle"
+                style={{
+                  fontSize: 36,
+                  backgroundImage: 'linear-gradient(135deg, #E2231A, #B91C1C)',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  color: 'transparent',
+                }}
+              />
+            </div>
+            <h3 className="text-lg font-semibold text-text-primary mb-2">Informasi Penggunaan Aplikasi</h3>
+            <p className="text-text-secondary text-sm leading-relaxed max-w-2xl mx-auto">
+              Aplikasi ini merupakan sistem internal PT Raba Bina Mandiri (RBM) yang digunakan khusus untuk memproses pendaftaran dan pengelolaan data calon karyawan secara digital. Seluruh informasi yang diinputkan akan tersimpan secara aman dalam database perusahaan dan diproses oleh tim HRD.
+            </p>
           </div>
         </div>
       </div>
