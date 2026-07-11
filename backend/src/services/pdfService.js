@@ -207,23 +207,46 @@ function formatValue(value) {
   return String(value).substring(0, 300);
 }
 
+// Breaks a single word wider than `maxWidth` into character chunks that each fit.
+// Needed for text pasted without spaces (e.g. "Mengelolaoperasionalmarketplace...").
+function breakLongWord(word, font, size, maxWidth) {
+  const chunks = [];
+  let current = '';
+  for (const ch of word) {
+    const candidate = current + ch;
+    if (current && font.widthOfTextAtSize(candidate, size) > maxWidth) {
+      chunks.push(current);
+      current = ch;
+    } else {
+      current = candidate;
+    }
+  }
+  if (current) chunks.push(current);
+  return chunks;
+}
+
 // Greedy word-wrap: splits `text` into lines that each fit within `maxWidth` at `size`.
+// Words longer than `maxWidth` on their own are hard-broken so they still wrap.
 function wrapLines(text, font, size, maxWidth) {
   const words = text.split(/\s+/).filter(Boolean);
   if (!words.length) return [];
   const lines = [];
-  let current = words[0];
-  for (let i = 1; i < words.length; i += 1) {
-    const word = words[i];
-    const candidate = `${current} ${word}`;
-    if (font.widthOfTextAtSize(candidate, size) <= maxWidth) {
-      current = candidate;
-    } else {
-      lines.push(current);
-      current = word;
-    }
-  }
-  lines.push(current);
+  let current = '';
+  words.forEach((word) => {
+    const wordChunks = font.widthOfTextAtSize(word, size) > maxWidth
+      ? breakLongWord(word, font, size, maxWidth)
+      : [word];
+    wordChunks.forEach((chunk) => {
+      const candidate = current ? `${current} ${chunk}` : chunk;
+      if (current && font.widthOfTextAtSize(candidate, size) > maxWidth) {
+        lines.push(current);
+        current = chunk;
+      } else {
+        current = candidate;
+      }
+    });
+  });
+  if (current) lines.push(current);
   return lines;
 }
 
@@ -365,6 +388,28 @@ function flattenArrayFields(data) {
   return flat;
 }
 
+// Wraps `value` to fit `col.width`, capped at `maxLines` lines with the last
+// line truncated + "…" if it doesn't fit — never returns more than `maxLines`.
+function wrapCell(value, font, size, width, maxLines) {
+  let lines = wrapLines(value, font, size, width);
+  if (lines.length > maxLines) {
+    lines = lines.slice(0, maxLines);
+    const last = lines[maxLines - 1];
+    let truncated = last;
+    while (truncated.length > 1 && font.widthOfTextAtSize(`${truncated}…`, size) > width) {
+      truncated = truncated.slice(0, -1);
+    }
+    lines[maxLines - 1] = `${truncated}…`;
+  }
+  return lines;
+}
+
+/**
+ * Draws a table whose rows sit on the fixed grid lines printed on the template
+ * (rowHeight apart). Each cell wraps up to `maxLinesPerRow` lines and truncates
+ * with "…" past that, so a long answer never pushes rows below out of their
+ * printed box — it shrinks to fit rather than shifting the layout.
+ */
 function drawTable(pages, font, layoutKey, rows) {
   const layout = TABLE_LAYOUTS[layoutKey];
   if (!layout || !Array.isArray(rows) || !rows.length) return;
@@ -372,32 +417,17 @@ function drawTable(pages, font, layoutKey, rows) {
   if (!page) return;
 
   const size = 7;
-  const lineHeight = size * 1.15;
-  const minRowHeight = layout.rowHeight;
   const maxLinesPerRow = layout.maxLinesPerRow || 2;
+  const lineHeight = Math.min(size * 1.15, layout.rowHeight / maxLinesPerRow);
 
-  let cursorY = layout.startY;
   rows.slice(0, layout.maxRows).forEach((row, i) => {
-    const y = cursorY;
-    const cellLines = layout.columns.map((col) => {
-      if (col.skipRows?.includes(i)) return [];
+    const y = layout.startY - i * layout.rowHeight;
+    layout.columns.forEach((col) => {
+      if (col.skipRows?.includes(i)) return;
       const value = formatValue(row[col.key]);
-      if (!value) return [];
-      let lines = wrapLines(value, font, size, col.width);
-      if (lines.length > maxLinesPerRow) {
-        lines = lines.slice(0, maxLinesPerRow);
-        const last = lines[maxLinesPerRow - 1];
-        let truncated = last;
-        while (truncated.length > 1 && font.widthOfTextAtSize(`${truncated}…`, size) > col.width) {
-          truncated = truncated.slice(0, -1);
-        }
-        lines[maxLinesPerRow - 1] = `${truncated}…`;
-      }
-      return lines;
-    });
-
-    layout.columns.forEach((col, colIdx) => {
-      cellLines[colIdx].forEach((line, lineIdx) => {
+      if (!value) return;
+      const lines = wrapCell(value, font, size, col.width, maxLinesPerRow);
+      lines.forEach((line, lineIdx) => {
         page.drawText(line, {
           x: col.x,
           y: y - lineIdx * lineHeight,
@@ -407,9 +437,6 @@ function drawTable(pages, font, layoutKey, rows) {
         });
       });
     });
-
-    const rowLineCount = Math.max(1, ...cellLines.map((lines) => lines.length));
-    cursorY -= Math.max(minRowHeight, rowLineCount * lineHeight);
   });
 }
 
