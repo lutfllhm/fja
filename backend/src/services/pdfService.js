@@ -64,59 +64,63 @@ const PDF_COORDS = {
   pendidikan_1_nem_ipk: { page: 1, x: 122, y: 786.0, size: 8 },
 
   // PAGE 2 - SECTION F: KETERAMPILAN LAIN
-  komputer: { page: 1, x: 122, y: 640.9, size: 8 },
-  keterampilan_lain: { page: 1, x: 122, y: 630.4, size: 8 },
+  // maxWidth/maxLines keep long answers wrapped and shrunk within this section
+  // instead of overflowing into RIWAYAT PEKERJAAN below (y=585.7).
+  komputer: { page: 1, x: 122, y: 640.9, size: 8, maxWidth: 450, maxLines: 1 },
+  keterampilan_lain: { page: 1, x: 122, y: 630.4, size: 8, maxWidth: 450, maxLines: 2, lineHeight: 8 },
 
   // PAGE 2 - SECTION G: RIWAYAT PEKERJAAN entry 1
-  pekerjaan_0_jenis_perusahaan: { page: 1, x: 122, y: 585.7, size: 8 },
-  pekerjaan_0_nama_perusahaan: { page: 1, x: 122, y: 575.2, size: 8 },
-  pekerjaan_0_lokasi: { page: 1, x: 361, y: 575.2, size: 8 },
-  pekerjaan_0_jabatan: { page: 1, x: 122, y: 564.8, size: 8 },
+  pekerjaan_0_jenis_perusahaan: { page: 1, x: 122, y: 585.7, size: 8, maxWidth: 200, maxLines: 1 },
+  pekerjaan_0_nama_perusahaan: { page: 1, x: 122, y: 575.2, size: 8, maxWidth: 200, maxLines: 1 },
+  pekerjaan_0_lokasi: { page: 1, x: 361, y: 575.2, size: 8, maxWidth: 200, maxLines: 1 },
+  pekerjaan_0_jabatan: { page: 1, x: 122, y: 564.8, size: 8, maxWidth: 200, maxLines: 1 },
   pekerjaan_0_tgl_masuk: { page: 1, x: 122, y: 554.3, size: 8 },
   pekerjaan_0_tgl_keluar: { page: 1, x: 360, y: 554.8, size: 8 },
-  pekerjaan_0_uraian: { page: 1, x: 122, y: 543.9, size: 7 },
-  pekerjaan_0_gaji_terakhir: { page: 1, x: 122, y: 449.9, size: 8 },
-  pekerjaan_0_tunjangan: { page: 1, x: 122, y: 439.5, size: 7 },
-  pekerjaan_0_fasilitas: { page: 1, x: 122, y: 429.0, size: 7 },
-  pekerjaan_0_alasan_keluar: { page: 1, x: 122, y: 418.6, size: 7 },
-  pekerjaan_0_pemberi_referensi: { page: 1, x: 122, y: 397.7, size: 8 },
+  pekerjaan_0_uraian: { page: 1, x: 122, y: 543.9, size: 7, maxWidth: 450, maxLines: 10, lineHeight: 8 },
+  pekerjaan_0_gaji_terakhir: { page: 1, x: 122, y: 449.9, size: 8, maxWidth: 200, maxLines: 1 },
+  pekerjaan_0_tunjangan: { page: 1, x: 122, y: 439.5, size: 7, maxWidth: 450, maxLines: 1 },
+  pekerjaan_0_fasilitas: { page: 1, x: 122, y: 429.0, size: 7, maxWidth: 450, maxLines: 1 },
+  pekerjaan_0_alasan_keluar: { page: 1, x: 122, y: 418.6, size: 7, maxWidth: 450, maxLines: 2, lineHeight: 8 },
+  pekerjaan_0_pemberi_referensi: { page: 1, x: 122, y: 397.7, size: 8, maxWidth: 200, maxLines: 1 },
   pekerjaan_0_telepon_referensi: { page: 1, x: 361, y: 397.7, size: 8 },
 
   // PAGE 2 - SECTION G entry 2
-  pekerjaan_1_jenis_perusahaan: { page: 1, x: 122, y: 384.6, size: 8 },
-  pekerjaan_1_nama_perusahaan: { page: 1, x: 122, y: 374.2, size: 8 },
-  pekerjaan_1_lokasi: { page: 1, x: 361, y: 374.2, size: 8 },
-  pekerjaan_1_jabatan: { page: 1, x: 122, y: 363.8, size: 8 },
+  pekerjaan_1_jenis_perusahaan: { page: 1, x: 122, y: 384.6, size: 8, maxWidth: 200, maxLines: 1 },
+  pekerjaan_1_nama_perusahaan: { page: 1, x: 122, y: 374.2, size: 8, maxWidth: 200, maxLines: 1 },
+  pekerjaan_1_lokasi: { page: 1, x: 361, y: 374.2, size: 8, maxWidth: 200, maxLines: 1 },
+  pekerjaan_1_jabatan: { page: 1, x: 122, y: 363.8, size: 8, maxWidth: 200, maxLines: 1 },
   pekerjaan_1_tgl_masuk: { page: 1, x: 122, y: 353.3, size: 8 },
   pekerjaan_1_tgl_keluar: { page: 1, x: 360, y: 353.8, size: 8 },
-  pekerjaan_1_uraian: { page: 1, x: 122, y: 342.9, size: 7 },
-  pekerjaan_1_gaji_terakhir: { page: 1, x: 122, y: 248.9, size: 8 },
-  pekerjaan_1_tunjangan: { page: 1, x: 122, y: 238.5, size: 7 },
-  pekerjaan_1_fasilitas: { page: 1, x: 122, y: 228.0, size: 7 },
-  pekerjaan_1_alasan_keluar: { page: 1, x: 122, y: 217.6, size: 7 },
-  pekerjaan_1_pemberi_referensi: { page: 1, x: 122, y: 196.7, size: 8 },
+  pekerjaan_1_uraian: { page: 1, x: 122, y: 342.9, size: 7, maxWidth: 450, maxLines: 10, lineHeight: 8 },
+  pekerjaan_1_gaji_terakhir: { page: 1, x: 122, y: 248.9, size: 8, maxWidth: 200, maxLines: 1 },
+  pekerjaan_1_tunjangan: { page: 1, x: 122, y: 238.5, size: 7, maxWidth: 450, maxLines: 1 },
+  pekerjaan_1_fasilitas: { page: 1, x: 122, y: 228.0, size: 7, maxWidth: 450, maxLines: 1 },
+  pekerjaan_1_alasan_keluar: { page: 1, x: 122, y: 217.6, size: 7, maxWidth: 450, maxLines: 2, lineHeight: 8 },
+  pekerjaan_1_pemberi_referensi: { page: 1, x: 122, y: 196.7, size: 8, maxWidth: 200, maxLines: 1 },
   pekerjaan_1_telepon_referensi: { page: 1, x: 361, y: 196.7, size: 8 },
 
   // PAGE 2 - SECTION H: MINAT TERHADAP PEKERJAAN (Q1-3 are on page 2)
-  minat_sumber_lowongan: { page: 1, x: 24, y: 158, size: 7 },
-  minat_tujuan_melamar: { page: 1, x: 24, y: 137, size: 7 },
-  minat_tahu_perusahaan: { page: 1, x: 24, y: 116, size: 7 },
-  minat_pernah_melamar: { page: 1, x: 24, y: 95, size: 7 },
-  minat_bersedia_luar_kota: { page: 1, x: 24, y: 75, size: 7 },
-  minat_bersedia_dinas_luar: { page: 1, x: 32, y: 54, size: 7 },
-  minat_bidang_dikuasai: { page: 1, x: 24, y: 33, size: 7 },
+  // Each question has ~20-21pt of clearance before the next one; wrap+shrink
+  // instead of letting a long answer bleed into the row below.
+  minat_sumber_lowongan: { page: 1, x: 24, y: 158, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
+  minat_tujuan_melamar: { page: 1, x: 24, y: 137, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
+  minat_tahu_perusahaan: { page: 1, x: 24, y: 116, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
+  minat_pernah_melamar: { page: 1, x: 24, y: 95, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
+  minat_bersedia_luar_kota: { page: 1, x: 24, y: 75, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
+  minat_bersedia_dinas_luar: { page: 1, x: 32, y: 54, size: 7, maxWidth: 512, maxLines: 2, lineHeight: 8 },
+  minat_bidang_dikuasai: { page: 1, x: 24, y: 33, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
 
   // PAGE 3 - SECTION H continued (Q7-10)
-  minat_melamar_lain: { page: 2, x: 24, y: 763, size: 7 },
-  minat_mulai_bekerja: { page: 2, x: 24, y: 742, size: 7 },
-  minat_gaji_diharapkan: { page: 2, x: 24, y: 711, size: 7 },
-  minat_kenal_karyawan: { page: 2, x: 24, y: 680, size: 7 },
+  minat_melamar_lain: { page: 2, x: 24, y: 763, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
+  minat_mulai_bekerja: { page: 2, x: 24, y: 742, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
+  minat_gaji_diharapkan: { page: 2, x: 24, y: 711, size: 7, maxWidth: 520, maxLines: 3, lineHeight: 8 },
+  minat_kenal_karyawan: { page: 2, x: 24, y: 680, size: 7, maxWidth: 520, maxLines: 3, lineHeight: 8 },
 
   // PAGE 3 - SECTION I: LAIN-LAIN
-  waktu_luang: { page: 2, x: 24, y: 562, size: 7 },
-  strong_point: { page: 2, x: 24, y: 413, size: 7 },
-  weak_point: { page: 2, x: 24, y: 361, size: 7 },
-  rencana_5_tahun: { page: 2, x: 24, y: 309, size: 7 },
+  waktu_luang: { page: 2, x: 24, y: 562, size: 7, maxWidth: 520, maxLines: 10, lineHeight: 8 },
+  strong_point: { page: 2, x: 24, y: 413, size: 7, maxWidth: 520, maxLines: 6, lineHeight: 8 },
+  weak_point: { page: 2, x: 24, y: 361, size: 7, maxWidth: 520, maxLines: 6, lineHeight: 8 },
+  rencana_5_tahun: { page: 2, x: 24, y: 309, size: 7, maxWidth: 520, maxLines: 10, lineHeight: 8 },
 
   // PAGE 3 - PENUTUP
   tempat_ttd: { page: 2, x: 430, y: 219.3, size: 8 },
@@ -200,25 +204,84 @@ function formatValue(value) {
   if (value === null || value === undefined || value === '') return '';
   if (typeof value === 'boolean') return value ? 'Ya' : 'Tidak';
   if (typeof value === 'object') return JSON.stringify(value);
-  return String(value).substring(0, 90);
+  return String(value).substring(0, 300);
 }
 
+// Greedy word-wrap: splits `text` into lines that each fit within `maxWidth` at `size`.
+function wrapLines(text, font, size, maxWidth) {
+  const words = text.split(/\s+/).filter(Boolean);
+  if (!words.length) return [];
+  const lines = [];
+  let current = words[0];
+  for (let i = 1; i < words.length; i += 1) {
+    const word = words[i];
+    const candidate = `${current} ${word}`;
+    if (font.widthOfTextAtSize(candidate, size) <= maxWidth) {
+      current = candidate;
+    } else {
+      lines.push(current);
+      current = word;
+    }
+  }
+  lines.push(current);
+  return lines;
+}
+
+/**
+ * Draws `text` inside a bounded box, wrapping onto multiple lines and shrinking
+ * the font size as needed so it never overflows into the next section/row.
+ * - coord.maxWidth: box width in pt (defaults to no wrap, single line, as before)
+ * - coord.maxLines: how many lines are available before the next section (defaults to 1)
+ * - coord.lineHeight: vertical spacing between lines (defaults to size * 1.15)
+ */
 function drawAt(page, text, coord, font, boldFont) {
   if (!text) return;
   const value = formatValue(text);
-  const size = coord.size || 8;
+  let size = coord.size || 8;
   const useFont = coord.bold && boldFont ? boldFont : font;
-  let x = coord.x;
-  if (coord.align === 'center' && coord.boxWidth) {
-    const textWidth = useFont.widthOfTextAtSize(value, size);
-    x = coord.boxX + (coord.boxWidth - textWidth) / 2;
+
+  if (!coord.maxWidth) {
+    let x = coord.x;
+    if (coord.align === 'center' && coord.boxWidth) {
+      const textWidth = useFont.widthOfTextAtSize(value, size);
+      x = coord.boxX + (coord.boxWidth - textWidth) / 2;
+    }
+    page.drawText(value, {
+      x,
+      y: coord.y,
+      size,
+      font: useFont,
+      color: rgb(0, 0, 0),
+    });
+    return;
   }
-  page.drawText(value, {
-    x,
-    y: coord.y,
-    size,
-    font: useFont,
-    color: rgb(0, 0, 0),
+
+  const maxLines = coord.maxLines || 1;
+  const minSize = coord.minSize || 6;
+  let lines = wrapLines(value, useFont, size, coord.maxWidth);
+  while (lines.length > maxLines && size > minSize) {
+    size -= 0.5;
+    lines = wrapLines(value, useFont, size, coord.maxWidth);
+  }
+  if (lines.length > maxLines) {
+    lines = lines.slice(0, maxLines);
+    const last = lines[maxLines - 1];
+    let truncated = last;
+    while (truncated.length > 1 && useFont.widthOfTextAtSize(`${truncated}…`, size) > coord.maxWidth) {
+      truncated = truncated.slice(0, -1);
+    }
+    lines[maxLines - 1] = `${truncated}…`;
+  }
+
+  const lineHeight = coord.lineHeight || size * 1.15;
+  lines.forEach((line, i) => {
+    page.drawText(line, {
+      x: coord.x,
+      y: coord.y - i * lineHeight,
+      size,
+      font: useFont,
+      color: rgb(0, 0, 0),
+    });
   });
 }
 
@@ -308,21 +371,45 @@ function drawTable(pages, font, layoutKey, rows) {
   const page = pages[layout.page];
   if (!page) return;
 
+  const size = 7;
+  const lineHeight = size * 1.15;
+  const minRowHeight = layout.rowHeight;
+  const maxLinesPerRow = layout.maxLinesPerRow || 2;
+
+  let cursorY = layout.startY;
   rows.slice(0, layout.maxRows).forEach((row, i) => {
-    const y = layout.startY - i * layout.rowHeight;
-    layout.columns.forEach((col) => {
-      if (col.skipRows?.includes(i)) return;
+    const y = cursorY;
+    const cellLines = layout.columns.map((col) => {
+      if (col.skipRows?.includes(i)) return [];
       const value = formatValue(row[col.key]);
-      if (!value) return;
-      page.drawText(value, {
-        x: col.x,
-        y,
-        size: 7,
-        font,
-        color: rgb(0, 0, 0),
-        maxWidth: col.width,
+      if (!value) return [];
+      let lines = wrapLines(value, font, size, col.width);
+      if (lines.length > maxLinesPerRow) {
+        lines = lines.slice(0, maxLinesPerRow);
+        const last = lines[maxLinesPerRow - 1];
+        let truncated = last;
+        while (truncated.length > 1 && font.widthOfTextAtSize(`${truncated}…`, size) > col.width) {
+          truncated = truncated.slice(0, -1);
+        }
+        lines[maxLinesPerRow - 1] = `${truncated}…`;
+      }
+      return lines;
+    });
+
+    layout.columns.forEach((col, colIdx) => {
+      cellLines[colIdx].forEach((line, lineIdx) => {
+        page.drawText(line, {
+          x: col.x,
+          y: y - lineIdx * lineHeight,
+          size,
+          font,
+          color: rgb(0, 0, 0),
+        });
       });
     });
+
+    const rowLineCount = Math.max(1, ...cellLines.map((lines) => lines.length));
+    cursorY -= Math.max(minRowHeight, rowLineCount * lineHeight);
   });
 }
 

@@ -152,7 +152,7 @@ nano /etc/nginx/sites-available/api.fja.iwareid.com
 ```nginx
 server {
     listen 80;
-    server_name api.fja.iwareid.com;
+    server_name fja-api.iwareid.com;
 
     client_max_body_size 10m;
 
