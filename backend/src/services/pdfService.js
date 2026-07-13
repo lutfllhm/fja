@@ -133,6 +133,8 @@ const TABLE_LAYOUTS = {
     startY: 426.3,
     rowHeight: 10.45,
     maxRows: 11,
+    maxLinesPerRow: 1,
+    minSize: 4.25,
     columns: [
       { key: 'nama', x: 125.7, width: 95 },
       { key: 'lp', x: 226.5, width: 38 },
@@ -148,6 +150,8 @@ const TABLE_LAYOUTS = {
     startY: 280.9,
     rowHeight: 10.45,
     maxRows: 12,
+    maxLinesPerRow: 1,
+    minSize: 4.25,
     columns: [
       { key: 'nama', x: 125.7, width: 95 },
       { key: 'lp', x: 226.5, width: 38 },
