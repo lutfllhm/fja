@@ -76,7 +76,7 @@ const PDF_COORDS = {
   pekerjaan_0_jabatan: { page: 1, x: 122, y: 564.8, size: 8, maxWidth: 200, maxLines: 1 },
   pekerjaan_0_tgl_masuk: { page: 1, x: 122, y: 554.3, size: 8 },
   pekerjaan_0_tgl_keluar: { page: 1, x: 360, y: 554.8, size: 8 },
-  pekerjaan_0_uraian: { page: 1, x: 122, y: 543.9, size: 7, maxWidth: 450, maxLines: 10, lineHeight: 8 },
+  pekerjaan_0_uraian: { page: 1, x: 122, y: 543.9, size: 7, maxWidth: 450, maxLines: 8, lineHeight: 10.4 },
   pekerjaan_0_gaji_terakhir: { page: 1, x: 122, y: 449.9, size: 8, maxWidth: 200, maxLines: 1 },
   pekerjaan_0_tunjangan: { page: 1, x: 122, y: 439.5, size: 7, maxWidth: 450, maxLines: 1 },
   pekerjaan_0_fasilitas: { page: 1, x: 122, y: 429.0, size: 7, maxWidth: 450, maxLines: 1 },
@@ -91,7 +91,7 @@ const PDF_COORDS = {
   pekerjaan_1_jabatan: { page: 1, x: 122, y: 363.8, size: 8, maxWidth: 200, maxLines: 1 },
   pekerjaan_1_tgl_masuk: { page: 1, x: 122, y: 353.3, size: 8 },
   pekerjaan_1_tgl_keluar: { page: 1, x: 360, y: 353.8, size: 8 },
-  pekerjaan_1_uraian: { page: 1, x: 122, y: 342.9, size: 7, maxWidth: 450, maxLines: 10, lineHeight: 8 },
+  pekerjaan_1_uraian: { page: 1, x: 122, y: 342.9, size: 7, maxWidth: 450, maxLines: 8, lineHeight: 10.4 },
   pekerjaan_1_gaji_terakhir: { page: 1, x: 122, y: 248.9, size: 8, maxWidth: 200, maxLines: 1 },
   pekerjaan_1_tunjangan: { page: 1, x: 122, y: 238.5, size: 7, maxWidth: 450, maxLines: 1 },
   pekerjaan_1_fasilitas: { page: 1, x: 122, y: 228.0, size: 7, maxWidth: 450, maxLines: 1 },
@@ -406,9 +406,11 @@ function wrapCell(value, font, size, width, maxLines) {
 
 /**
  * Draws a table whose rows sit on the fixed grid lines printed on the template
- * (rowHeight apart). Each cell wraps up to `maxLinesPerRow` lines and truncates
- * with "…" past that, so a long answer never pushes rows below out of their
- * printed box — it shrinks to fit rather than shifting the layout.
+ * (rowHeight apart). Each cell shrinks its font size (down to `minSize`) to try
+ * to fit on one line first — this table's rows are only ~10.4pt tall, so a second
+ * wrapped line would visually collide with the row below rather than sit cleanly
+ * inside the row band. Only once shrinking bottoms out does it fall back to
+ * wrapping up to `maxLinesPerRow` lines and truncating with "…".
  */
 function drawTable(pages, font, layoutKey, rows) {
   const layout = TABLE_LAYOUTS[layoutKey];
@@ -416,9 +418,9 @@ function drawTable(pages, font, layoutKey, rows) {
   const page = pages[layout.page];
   if (!page) return;
 
-  const size = 7;
+  const baseSize = 7;
+  const minSize = layout.minSize || 5.5;
   const maxLinesPerRow = layout.maxLinesPerRow || 2;
-  const lineHeight = Math.min(size * 1.15, layout.rowHeight / maxLinesPerRow);
 
   rows.slice(0, layout.maxRows).forEach((row, i) => {
     const y = layout.startY - i * layout.rowHeight;
@@ -426,6 +428,12 @@ function drawTable(pages, font, layoutKey, rows) {
       if (col.skipRows?.includes(i)) return;
       const value = formatValue(row[col.key]);
       if (!value) return;
+
+      let size = baseSize;
+      while (size > minSize && font.widthOfTextAtSize(value, size) > col.width) {
+        size -= 0.5;
+      }
+      const lineHeight = Math.min(size * 1.15, layout.rowHeight / maxLinesPerRow);
       const lines = wrapCell(value, font, size, col.width, maxLinesPerRow);
       lines.forEach((line, lineIdx) => {
         page.drawText(line, {
