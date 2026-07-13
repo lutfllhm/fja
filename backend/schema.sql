@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS applications (
   minat_bersedia_dinas_luar TEXT,
   minat_bidang_dikuasai TEXT,
   minat_melamar_lain TEXT,
-  minat_mulai_bekerja VARCHAR(100),
+  minat_mulai_bekerja TEXT,
   minat_gaji_diharapkan TEXT,
   minat_kenal_karyawan TEXT,
 

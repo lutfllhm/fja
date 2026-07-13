@@ -50,7 +50,7 @@ const COLUMN_TYPES = {
   minat_bersedia_dinas_luar: 'TEXT',
   minat_bidang_dikuasai: 'TEXT',
   minat_melamar_lain: 'TEXT',
-  minat_mulai_bekerja: 'VARCHAR(100)',
+  minat_mulai_bekerja: 'TEXT',
   minat_gaji_diharapkan: 'TEXT',
   minat_kenal_karyawan: 'TEXT',
   referensi: 'JSON',
@@ -88,6 +88,15 @@ async function runMigrations() {
         console.log(`Kolom ${colName} berhasil ditambahkan.`);
       }
     }
+
+    // 4. Perbesar kolom minat_mulai_bekerja dari VARCHAR(100) lama ke TEXT
+    const mulaiBekerjaCol = columns.find(c => c.Field === 'minat_mulai_bekerja');
+    if (mulaiBekerjaCol && mulaiBekerjaCol.Type.toLowerCase() !== 'text') {
+      console.log('Memperbesar kolom minat_mulai_bekerja menjadi TEXT...');
+      await pool.query('ALTER TABLE applications MODIFY COLUMN minat_mulai_bekerja TEXT');
+      console.log('Kolom minat_mulai_bekerja berhasil diperbesar.');
+    }
+
     console.log('Migrasi database selesai.');
   } catch (error) {
     console.error('Gagal menjalankan migrasi database:', error);
