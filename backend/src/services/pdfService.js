@@ -433,7 +433,7 @@ function drawTable(pages, font, layoutKey, rows) {
       while (size > minSize && font.widthOfTextAtSize(value, size) > col.width) {
         size -= 0.5;
       }
-      const lineHeight = Math.min(size * 1.15, layout.rowHeight / maxLinesPerRow);
+      const lineHeight = Math.min(size * 1.05, layout.rowHeight / maxLinesPerRow - 0.5);
       const lines = wrapCell(value, font, size, col.width, maxLinesPerRow);
       lines.forEach((line, lineIdx) => {
         page.drawText(line, {
