@@ -101,21 +101,22 @@ const PDF_COORDS = {
   pekerjaan_1_telepon_referensi: { page: 1, x: 361, y: 196.7, size: 8 },
 
   // PAGE 2 - SECTION H: MINAT TERHADAP PEKERJAAN (Q1-3 are on page 2)
-  // Each question has ~20-21pt of clearance before the next one; wrap+shrink
-  // instead of letting a long answer bleed into the row below.
-  minat_sumber_lowongan: { page: 1, x: 24, y: 158, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
-  minat_tujuan_melamar: { page: 1, x: 24, y: 137, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
-  minat_tahu_perusahaan: { page: 1, x: 24, y: 116, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
-  minat_pernah_melamar: { page: 1, x: 24, y: 95, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
-  minat_bersedia_luar_kota: { page: 1, x: 24, y: 75, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
-  minat_bersedia_dinas_luar: { page: 1, x: 32, y: 54, size: 7, maxWidth: 512, maxLines: 2, lineHeight: 8 },
-  minat_bidang_dikuasai: { page: 1, x: 24, y: 33, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
+  // Each question has ~20-21pt of clearance before the next one. Capped at
+  // maxLines: 1 so a long answer shrinks/truncates with "…" instead of ever
+  // spilling a second line into the next question's row.
+  minat_sumber_lowongan: { page: 1, x: 24, y: 158, size: 7, maxWidth: 520, maxLines: 1, minSize: 5.5 },
+  minat_tujuan_melamar: { page: 1, x: 24, y: 137, size: 7, maxWidth: 520, maxLines: 1, minSize: 5.5 },
+  minat_tahu_perusahaan: { page: 1, x: 24, y: 116, size: 7, maxWidth: 520, maxLines: 1, minSize: 5.5 },
+  minat_pernah_melamar: { page: 1, x: 24, y: 95, size: 7, maxWidth: 520, maxLines: 1, minSize: 5.5 },
+  minat_bersedia_luar_kota: { page: 1, x: 24, y: 75, size: 7, maxWidth: 520, maxLines: 1, minSize: 5.5 },
+  minat_bersedia_dinas_luar: { page: 1, x: 32, y: 54, size: 7, maxWidth: 512, maxLines: 1, minSize: 5.5 },
+  minat_bidang_dikuasai: { page: 1, x: 24, y: 33, size: 7, maxWidth: 520, maxLines: 1, minSize: 5.5 },
 
   // PAGE 3 - SECTION H continued (Q7-10)
-  minat_melamar_lain: { page: 2, x: 24, y: 763, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
-  minat_mulai_bekerja: { page: 2, x: 24, y: 742, size: 7, maxWidth: 520, maxLines: 2, lineHeight: 8 },
-  minat_gaji_diharapkan: { page: 2, x: 24, y: 711, size: 7, maxWidth: 520, maxLines: 3, lineHeight: 8 },
-  minat_kenal_karyawan: { page: 2, x: 24, y: 680, size: 7, maxWidth: 520, maxLines: 3, lineHeight: 8 },
+  minat_melamar_lain: { page: 2, x: 24, y: 763, size: 7, maxWidth: 520, maxLines: 1, minSize: 5.5 },
+  minat_mulai_bekerja: { page: 2, x: 24, y: 742, size: 7, maxWidth: 520, maxLines: 1, minSize: 5.5 },
+  minat_gaji_diharapkan: { page: 2, x: 24, y: 711, size: 7, maxWidth: 520, maxLines: 1, minSize: 5.5 },
+  minat_kenal_karyawan: { page: 2, x: 24, y: 680, size: 7, maxWidth: 520, maxLines: 1, minSize: 5.5 },
 
   // PAGE 3 - SECTION I: LAIN-LAIN
   waktu_luang: { page: 2, x: 24, y: 562, size: 7, maxWidth: 520, maxLines: 10, lineHeight: 10.5 },

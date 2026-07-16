@@ -746,17 +746,17 @@ function StepPekerjaan({ formData, updateField }: any) {
 }
 
 const MINAT_QUESTIONS: [string, string, number][] = [
-  ['minat_sumber_lowongan', '1. Darimana anda mengetahui lowongan yang ada di Perusahaan kami?', 280],
-  ['minat_tujuan_melamar', '2. Apakah tujuan anda melamar pekerjaan di Perusahaan?', 280],
-  ['minat_tahu_perusahaan', '3. Apakah yang anda ketahui mengenai Perusahaan kami?', 280],
-  ['minat_pernah_melamar', '4. Pernahkah anda melamar di Perusahaan kami? Bila pernah sebutkan kapan dan apa jabatan/posisinya?', 280],
-  ['minat_bersedia_luar_kota', '5. Apakah anda bersedia ditempatkan diluar kota? Jika tidak, jelaskan!', 280],
-  ['minat_bersedia_dinas_luar', '   Apakah anda bersedia dinas keluar kota? Jika tidak, jelaskan!', 280],
-  ['minat_bidang_dikuasai', '6. Bidang pekerjaan apa saja yang anda kuasai?', 280],
-  ['minat_melamar_lain', '7. Apakah saat ini anda juga sedang melamar pekerjaan di perusahaan lain? Jika ya, sebutkan!', 280],
-  ['minat_mulai_bekerja', '8. Kapankah anda dapat mulai bekerja di Perusahaan kami?', 280],
-  ['minat_gaji_diharapkan', '9. Berapakah gaji yang anda harapkan (gaji pokok dan tunjangan)?', 420],
-  ['minat_kenal_karyawan', '10. Adakah karyawan kami yang anda kenal? Sebutkan posisi/bagian dan hubungannya.', 420],
+  ['minat_sumber_lowongan', '1. Darimana anda mengetahui lowongan yang ada di Perusahaan kami?', 200],
+  ['minat_tujuan_melamar', '2. Apakah tujuan anda melamar pekerjaan di Perusahaan?', 200],
+  ['minat_tahu_perusahaan', '3. Apakah yang anda ketahui mengenai Perusahaan kami?', 200],
+  ['minat_pernah_melamar', '4. Pernahkah anda melamar di Perusahaan kami? Bila pernah sebutkan kapan dan apa jabatan/posisinya?', 200],
+  ['minat_bersedia_luar_kota', '5. Apakah anda bersedia ditempatkan diluar kota? Jika tidak, jelaskan!', 200],
+  ['minat_bersedia_dinas_luar', '   Apakah anda bersedia dinas keluar kota? Jika tidak, jelaskan!', 200],
+  ['minat_bidang_dikuasai', '6. Bidang pekerjaan apa saja yang anda kuasai?', 200],
+  ['minat_melamar_lain', '7. Apakah saat ini anda juga sedang melamar pekerjaan di perusahaan lain? Jika ya, sebutkan!', 200],
+  ['minat_mulai_bekerja', '8. Kapankah anda dapat mulai bekerja di Perusahaan kami?', 200],
+  ['minat_gaji_diharapkan', '9. Berapakah gaji yang anda harapkan (gaji pokok dan tunjangan)?', 200],
+  ['minat_kenal_karyawan', '10. Adakah karyawan kami yang anda kenal? Sebutkan posisi/bagian dan hubungannya.', 200],
 ];
 
 function StepMinat({ formData, updateField }: any) {
