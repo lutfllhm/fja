@@ -185,11 +185,11 @@ const TABLE_LAYOUTS = {
     rowHeight: 10.45,
     maxRows: 4,
     columns: [
-      { key: 'nama', x: 63, width: 90 },
-      { key: 'perusahaan', x: 166, width: 115 },
-      { key: 'alamat', x: 295, width: 95 },
-      { key: 'telepon', x: 398, width: 95 },
-      { key: 'hubungan', x: 505, width: 90 },
+      { key: 'nama', x: 26, width: 92 },
+      { key: 'perusahaan', x: 126, width: 116 },
+      { key: 'alamat', x: 249, width: 113, minSize: 4.25 },
+      { key: 'telepon', x: 368, width: 96 },
+      { key: 'hubungan', x: 471, width: 92 },
     ],
   },
   aktivitas_sosial: {
