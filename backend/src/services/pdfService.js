@@ -139,7 +139,7 @@ const TABLE_LAYOUTS = {
     columns: [
       { key: 'nama', x: 125.7, width: 95 },
       { key: 'lp', x: 226.5, width: 38 },
-      { key: 'ttl_umur', x: 266, width: 70, minSize: 3.5 },
+      { key: 'ttl_umur', x: 248, width: 80, minSize: 3.5 },
       { key: 'pendidikan', x: 338.5, width: 80 },
       { key: 'pekerjaan', x: 423.5, width: 44 },
       { key: 'jenis_perusahaan', x: 476.6, width: 50 },
@@ -156,7 +156,7 @@ const TABLE_LAYOUTS = {
     columns: [
       { key: 'nama', x: 125.7, width: 95 },
       { key: 'lp', x: 226.5, width: 38 },
-      { key: 'ttl_umur', x: 266, width: 70, minSize: 3.5 },
+      { key: 'ttl_umur', x: 248, width: 80, minSize: 3.5 },
       { key: 'pendidikan', x: 338.5, width: 80 },
       { key: 'pekerjaan', x: 423.5, width: 44 },
       { key: 'jenis_perusahaan', x: 476.6, width: 50 },
