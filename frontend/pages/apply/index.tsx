@@ -164,7 +164,7 @@ function TextAreaInput({ label, name, value, onChange, rows = 3, required, maxLe
           className="text-text-muted"
           style={{ fontSize: 11, textAlign: 'right', marginTop: 2, color: nearLimit ? '#dc2626' : undefined }}
         >
-          {length}/{maxLength} karakter — agar tidak terpotong saat dicetak ke PDF
+          {length}/{maxLength} karakter (maksimal)
         </p>
       )}
     </div>
