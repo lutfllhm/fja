@@ -118,10 +118,10 @@ const PDF_COORDS = {
   minat_kenal_karyawan: { page: 2, x: 24, y: 680, size: 7, maxWidth: 520, maxLines: 3, lineHeight: 8 },
 
   // PAGE 3 - SECTION I: LAIN-LAIN
-  waktu_luang: { page: 2, x: 24, y: 562, size: 7, maxWidth: 520, maxLines: 10, lineHeight: 8 },
-  strong_point: { page: 2, x: 24, y: 413, size: 7, maxWidth: 520, maxLines: 6, lineHeight: 8 },
-  weak_point: { page: 2, x: 24, y: 361, size: 7, maxWidth: 520, maxLines: 6, lineHeight: 8 },
-  rencana_5_tahun: { page: 2, x: 24, y: 309, size: 7, maxWidth: 520, maxLines: 10, lineHeight: 8 },
+  waktu_luang: { page: 2, x: 24, y: 562, size: 7, maxWidth: 520, maxLines: 10, lineHeight: 10.5 },
+  strong_point: { page: 2, x: 24, y: 413, size: 7, maxWidth: 520, maxLines: 6, lineHeight: 10.5 },
+  weak_point: { page: 2, x: 24, y: 361, size: 7, maxWidth: 520, maxLines: 6, lineHeight: 10.5 },
+  rencana_5_tahun: { page: 2, x: 24, y: 309, size: 7, maxWidth: 520, maxLines: 10, lineHeight: 10.5 },
 
   // PAGE 3 - PENUTUP
   tempat_ttd: { page: 2, x: 430, y: 219.3, size: 8 },
