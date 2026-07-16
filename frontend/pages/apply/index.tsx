@@ -813,7 +813,15 @@ function StepPenutup({ formData, updateField, setFiles }: any) {
         maka saya bersedia menerima sanksi sesuai ketentuan perusahaan.
       </p>
       <div className="field-row">
-        <TextInput label="Tempat" name="tempat_ttd" value={formData.tempat_ttd} onChange={(v) => updateField('tempat_ttd', v)} required />
+        <TextInput
+          label="Tempat"
+          name="tempat_ttd"
+          value={formData.tempat_ttd}
+          onChange={(v) => updateField('tempat_ttd', v)}
+          required
+          placeholder="Contoh: Surabaya"
+          description="Isi nama kota tempat tanda tangan, bukan alamat lengkap"
+        />
         <TextInput label="Tanggal" name="tanggal_ttd" type="date" value={formData.tanggal_ttd} onChange={(v) => updateField('tanggal_ttd', v)} required />
       </div>
       <SignaturePad label="Tanda Tangan" onChange={(file) => setFiles((prev: any) => ({ ...prev, ttd: file }))} />
