@@ -126,7 +126,7 @@ const PDF_COORDS = {
 
   // PAGE 3 - PENUTUP
   tempat_ttd: { page: 2, x: 430, y: 219.3, size: 8 },
-  signature_name: { page: 2, x: 470, y: 145, size: 9, align: 'center', boxX: 446, boxWidth: 110, bold: true },
+  signature_name: { page: 2, x: 470, y: 145, size: 9, align: 'center', boxX: 446, boxWidth: 110, bold: true, abbreviate: true },
 };
 
 const TABLE_LAYOUTS = {
@@ -256,6 +256,20 @@ function wrapLines(text, font, size, maxWidth) {
   return lines;
 }
 
+// Shrinks a full name to fit `maxWidth` by abbreviating words to their initial,
+// starting from the last word and working backward — but always keeps the
+// first word whole (e.g. "ACHMAD FARID BUDI SAMPURNO" -> "ACHMAD FARID BUDI S").
+function abbreviateName(text, font, size, maxWidth) {
+  const words = text.trim().split(/\s+/);
+  if (words.length <= 1 || font.widthOfTextAtSize(text, size) <= maxWidth) return text;
+
+  for (let cut = words.length - 1; cut >= 1; cut -= 1) {
+    const candidate = [...words.slice(0, cut), `${words[cut][0]}.`].join(' ');
+    if (font.widthOfTextAtSize(candidate, size) <= maxWidth) return candidate;
+  }
+  return words[0];
+}
+
 /**
  * Draws `text` inside a bounded box, wrapping onto multiple lines and shrinking
  * the font size as needed so it never overflows into the next section/row.
@@ -265,11 +279,14 @@ function wrapLines(text, font, size, maxWidth) {
  */
 function drawAt(page, text, coord, font, boldFont) {
   if (!text) return;
-  const value = formatValue(text);
+  let value = formatValue(text);
   let size = coord.size || 8;
   const useFont = coord.bold && boldFont ? boldFont : font;
 
   if (!coord.maxWidth) {
+    if (coord.abbreviate && coord.boxWidth) {
+      value = abbreviateName(value, useFont, size, coord.boxWidth);
+    }
     let x = coord.x;
     if (coord.align === 'center' && coord.boxWidth) {
       const textWidth = useFont.widthOfTextAtSize(value, size);
