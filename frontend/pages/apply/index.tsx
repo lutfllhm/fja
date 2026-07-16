@@ -139,9 +139,12 @@ interface TextAreaProps {
   onChange: (value: any) => void;
   rows?: number;
   required?: boolean;
+  maxLength?: number;
 }
 
-function TextAreaInput({ label, name, value, onChange, rows = 3, required }: TextAreaProps) {
+function TextAreaInput({ label, name, value, onChange, rows = 3, required, maxLength }: TextAreaProps) {
+  const length = (value || '').length;
+  const nearLimit = maxLength ? length > maxLength * 0.9 : false;
   return (
     <div>
       <label className="field-label">
@@ -154,7 +157,16 @@ function TextAreaInput({ label, name, value, onChange, rows = 3, required }: Tex
         value={value || ''}
         onChange={(e) => onChange(e.target.value)}
         className="form-textarea"
+        maxLength={maxLength}
       />
+      {maxLength && (
+        <p
+          className="text-text-muted"
+          style={{ fontSize: 11, textAlign: 'right', marginTop: 2, color: nearLimit ? '#dc2626' : undefined }}
+        >
+          {length}/{maxLength} karakter — agar tidak terpotong saat dicetak ke PDF
+        </p>
+      )}
     </div>
   );
 }
@@ -681,8 +693,8 @@ function StepBahasa({ formData, updateField }: any) {
 function StepKeterampilan({ formData, updateField }: any) {
   return (
     <SectionCard icon="tools" title="Keterampilan Lain yang Dikuasai">
-      <TextAreaInput label="Komputer" name="komputer" value={formData.komputer} onChange={(v) => updateField('komputer', v)} />
-      <TextAreaInput label="Keterampilan Lain" name="keterampilan_lain" value={formData.keterampilan_lain} onChange={(v) => updateField('keterampilan_lain', v)} />
+      <TextAreaInput label="Komputer" name="komputer" value={formData.komputer} onChange={(v) => updateField('komputer', v)} maxLength={140} />
+      <TextAreaInput label="Keterampilan Lain" name="keterampilan_lain" value={formData.keterampilan_lain} onChange={(v) => updateField('keterampilan_lain', v)} maxLength={280} />
     </SectionCard>
   );
 }
@@ -733,25 +745,25 @@ function StepPekerjaan({ formData, updateField }: any) {
   );
 }
 
-const MINAT_QUESTIONS: [string, string][] = [
-  ['minat_sumber_lowongan', '1. Darimana anda mengetahui lowongan yang ada di Perusahaan kami?'],
-  ['minat_tujuan_melamar', '2. Apakah tujuan anda melamar pekerjaan di Perusahaan?'],
-  ['minat_tahu_perusahaan', '3. Apakah yang anda ketahui mengenai Perusahaan kami?'],
-  ['minat_pernah_melamar', '4. Pernahkah anda melamar di Perusahaan kami? Bila pernah sebutkan kapan dan apa jabatan/posisinya?'],
-  ['minat_bersedia_luar_kota', '5. Apakah anda bersedia ditempatkan diluar kota? Jika tidak, jelaskan!'],
-  ['minat_bersedia_dinas_luar', '   Apakah anda bersedia dinas keluar kota? Jika tidak, jelaskan!'],
-  ['minat_bidang_dikuasai', '6. Bidang pekerjaan apa saja yang anda kuasai?'],
-  ['minat_melamar_lain', '7. Apakah saat ini anda juga sedang melamar pekerjaan di perusahaan lain? Jika ya, sebutkan!'],
-  ['minat_mulai_bekerja', '8. Kapankah anda dapat mulai bekerja di Perusahaan kami?'],
-  ['minat_gaji_diharapkan', '9. Berapakah gaji yang anda harapkan (gaji pokok dan tunjangan)?'],
-  ['minat_kenal_karyawan', '10. Adakah karyawan kami yang anda kenal? Sebutkan posisi/bagian dan hubungannya.'],
+const MINAT_QUESTIONS: [string, string, number][] = [
+  ['minat_sumber_lowongan', '1. Darimana anda mengetahui lowongan yang ada di Perusahaan kami?', 280],
+  ['minat_tujuan_melamar', '2. Apakah tujuan anda melamar pekerjaan di Perusahaan?', 280],
+  ['minat_tahu_perusahaan', '3. Apakah yang anda ketahui mengenai Perusahaan kami?', 280],
+  ['minat_pernah_melamar', '4. Pernahkah anda melamar di Perusahaan kami? Bila pernah sebutkan kapan dan apa jabatan/posisinya?', 280],
+  ['minat_bersedia_luar_kota', '5. Apakah anda bersedia ditempatkan diluar kota? Jika tidak, jelaskan!', 280],
+  ['minat_bersedia_dinas_luar', '   Apakah anda bersedia dinas keluar kota? Jika tidak, jelaskan!', 280],
+  ['minat_bidang_dikuasai', '6. Bidang pekerjaan apa saja yang anda kuasai?', 280],
+  ['minat_melamar_lain', '7. Apakah saat ini anda juga sedang melamar pekerjaan di perusahaan lain? Jika ya, sebutkan!', 280],
+  ['minat_mulai_bekerja', '8. Kapankah anda dapat mulai bekerja di Perusahaan kami?', 280],
+  ['minat_gaji_diharapkan', '9. Berapakah gaji yang anda harapkan (gaji pokok dan tunjangan)?', 420],
+  ['minat_kenal_karyawan', '10. Adakah karyawan kami yang anda kenal? Sebutkan posisi/bagian dan hubungannya.', 420],
 ];
 
 function StepMinat({ formData, updateField }: any) {
   return (
     <SectionCard icon="bulb" title="Minat Terhadap Pekerjaan">
-      {MINAT_QUESTIONS.map(([key, label]) => (
-        <TextAreaInput key={key} label={label} name={key} rows={2} value={formData[key]} onChange={(v) => updateField(key, v)} />
+      {MINAT_QUESTIONS.map(([key, label, maxLength]) => (
+        <TextAreaInput key={key} label={label} name={key} rows={2} value={formData[key]} onChange={(v) => updateField(key, v)} maxLength={maxLength} />
       ))}
     </SectionCard>
   );
@@ -771,7 +783,7 @@ function StepLainLain({ formData, updateField }: any) {
       </SectionCard>
 
       <SectionCard icon="notes" title="Lain-lain">
-        <TextAreaInput label="Bagaimana cara anda mengisi waktu luang?" name="waktu_luang" value={formData.waktu_luang} onChange={(v) => updateField('waktu_luang', v)} />
+        <TextAreaInput label="Bagaimana cara anda mengisi waktu luang?" name="waktu_luang" value={formData.waktu_luang} onChange={(v) => updateField('waktu_luang', v)} rows={4} maxLength={1500} />
       </SectionCard>
 
       <SectionCard icon="users-group" title="Aktivitas Sosial" subtitle="Organisasi apa saja yang pernah Anda ikuti?">
@@ -785,9 +797,9 @@ function StepLainLain({ formData, updateField }: any) {
       </SectionCard>
 
       <SectionCard icon="target" title="Refleksi Diri">
-        <TextAreaInput label="Strong Point (kelebihan Anda)" name="strong_point" value={formData.strong_point} onChange={(v) => updateField('strong_point', v)} />
-        <TextAreaInput label="Weak Point (kelemahan Anda)" name="weak_point" value={formData.weak_point} onChange={(v) => updateField('weak_point', v)} />
-        <TextAreaInput label="Rencana 5 Tahun Ke Depan" name="rencana_5_tahun" value={formData.rencana_5_tahun} onChange={(v) => updateField('rencana_5_tahun', v)} />
+        <TextAreaInput label="Strong Point (kelebihan Anda)" name="strong_point" value={formData.strong_point} onChange={(v) => updateField('strong_point', v)} rows={4} maxLength={900} />
+        <TextAreaInput label="Weak Point (kelemahan Anda)" name="weak_point" value={formData.weak_point} onChange={(v) => updateField('weak_point', v)} rows={4} maxLength={900} />
+        <TextAreaInput label="Rencana 5 Tahun Ke Depan" name="rencana_5_tahun" value={formData.rencana_5_tahun} onChange={(v) => updateField('rencana_5_tahun', v)} rows={4} maxLength={1500} />
       </SectionCard>
     </>
   );
