@@ -12,7 +12,7 @@ const PDF_COORDS = {
   // PAGE 1 - header & SECTION A: DATA PRIBADI
   posisi_dilamar: { page: 0, x: 478.9, y: 779, size: 9 },
   nama_lengkap: { page: 0, x: 122, y: 713.4, size: 9 },
-  tempat_lahir: { page: 0, x: 124, y: 702.9, size: 8 },
+  ttl: { page: 0, x: 124, y: 702.9, size: 8 },
   agama: { page: 0, x: 467, y: 702.9, size: 8 },
   jenis_kelamin: { page: 0, x: 124, y: 692.5, size: 9 },
   gol_darah: { page: 0, x: 466, y: 692.5, size: 9 },
@@ -468,6 +468,27 @@ async function fillPdf(applicationData) {
   const flatData = flattenArrayFields(applicationData);
 
   flatData.signature_name = applicationData.nama_lengkap;
+
+  // "Tempat / Tanggal Lahir" is a single label on the template, so combine
+  // them into one "Sidoarjo, 05/06/2003" value instead of two separate fields.
+  if (flatData.tanggal_lahir) {
+    const dobObj = flatData.tanggal_lahir instanceof Date
+      ? flatData.tanggal_lahir
+      : new Date(flatData.tanggal_lahir);
+    if (!Number.isNaN(dobObj.getTime())) {
+      const day = String(dobObj.getUTCDate()).padStart(2, '0');
+      const month = String(dobObj.getUTCMonth() + 1).padStart(2, '0');
+      const year = dobObj.getUTCFullYear();
+      flatData.ttl = flatData.tempat_lahir
+        ? `${flatData.tempat_lahir}, ${day}/${month}/${year}`
+        : `${day}/${month}/${year}`;
+    } else {
+      flatData.ttl = flatData.tempat_lahir || '';
+    }
+  } else {
+    flatData.ttl = flatData.tempat_lahir || '';
+  }
+
   const JENIS_KELAMIN_LABELS = { L: 'Laki-laki', P: 'Perempuan' };
   if (flatData.jenis_kelamin) {
     flatData.jenis_kelamin = JENIS_KELAMIN_LABELS[flatData.jenis_kelamin] || flatData.jenis_kelamin;
