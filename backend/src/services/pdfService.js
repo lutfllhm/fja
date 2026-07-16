@@ -470,18 +470,22 @@ async function fillPdf(applicationData) {
   flatData.signature_name = applicationData.nama_lengkap;
 
   // "Tempat / Tanggal Lahir" is a single label on the template, so combine
-  // them into one "Sidoarjo, 05/06/2003" value instead of two separate fields.
+  // them into one "Sidoarjo, 05 Oktober 1994" value instead of two separate fields.
+  const BULAN_ID = [
+    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
+  ];
   if (flatData.tanggal_lahir) {
     const dobObj = flatData.tanggal_lahir instanceof Date
       ? flatData.tanggal_lahir
       : new Date(flatData.tanggal_lahir);
     if (!Number.isNaN(dobObj.getTime())) {
       const day = String(dobObj.getUTCDate()).padStart(2, '0');
-      const month = String(dobObj.getUTCMonth() + 1).padStart(2, '0');
+      const month = BULAN_ID[dobObj.getUTCMonth()];
       const year = dobObj.getUTCFullYear();
       flatData.ttl = flatData.tempat_lahir
-        ? `${flatData.tempat_lahir}, ${day}/${month}/${year}`
-        : `${day}/${month}/${year}`;
+        ? `${flatData.tempat_lahir}, ${day} ${month} ${year}`
+        : `${day} ${month} ${year}`;
     } else {
       flatData.ttl = flatData.tempat_lahir || '';
     }
