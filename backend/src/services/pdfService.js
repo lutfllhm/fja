@@ -209,7 +209,7 @@ function formatValue(value) {
   if (value === null || value === undefined || value === '') return '';
   if (typeof value === 'boolean') return value ? 'Ya' : 'Tidak';
   if (typeof value === 'object') return JSON.stringify(value);
-  return String(value).substring(0, 300);
+  return String(value).substring(0, 2000);
 }
 
 // Breaks a single word wider than `maxWidth` into character chunks that each fit.
