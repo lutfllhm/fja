@@ -139,7 +139,7 @@ const TABLE_LAYOUTS = {
     columns: [
       { key: 'nama', x: 125.7, width: 95 },
       { key: 'lp', x: 226.5, width: 38 },
-      { key: 'ttl_umur', x: 266, width: 70 },
+      { key: 'ttl_umur', x: 266, width: 70, minSize: 3.5 },
       { key: 'pendidikan', x: 338.5, width: 80 },
       { key: 'pekerjaan', x: 423.5, width: 44 },
       { key: 'jenis_perusahaan', x: 476.6, width: 50 },
@@ -156,7 +156,7 @@ const TABLE_LAYOUTS = {
     columns: [
       { key: 'nama', x: 125.7, width: 95 },
       { key: 'lp', x: 226.5, width: 38 },
-      { key: 'ttl_umur', x: 266, width: 70 },
+      { key: 'ttl_umur', x: 266, width: 70, minSize: 3.5 },
       { key: 'pendidikan', x: 338.5, width: 80 },
       { key: 'pekerjaan', x: 423.5, width: 44 },
       { key: 'jenis_perusahaan', x: 476.6, width: 50 },
@@ -434,9 +434,10 @@ function drawTable(pages, font, layoutKey, rows) {
       const value = formatValue(row[col.key]);
       if (!value) return;
 
+      const colMinSize = col.minSize || minSize;
       let size = baseSize;
-      while (size > minSize && font.widthOfTextAtSize(value, size) > col.width) {
-        size -= 0.5;
+      while (size > colMinSize && font.widthOfTextAtSize(value, size) > col.width) {
+        size -= 0.25;
       }
       const lineHeight = Math.min(size * 1.05, layout.rowHeight / maxLinesPerRow - 0.5);
       const lines = wrapCell(value, font, size, col.width, maxLinesPerRow);
