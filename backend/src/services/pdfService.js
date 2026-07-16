@@ -32,7 +32,7 @@ const PDF_COORDS = {
   sosmed_lainnya: { page: 0, x: 345, y: 588.1, size: 8 },
   tinggi_badan: { page: 0, x: 122, y: 577.6, size: 9 },
   no_sim: { page: 0, x: 407, y: 682.5, size: 9 },
-  darurat_telepon: { page: 0, x: 130, y: 567.2, size: 8 },
+  darurat_telepon: { page: 0, x: 160, y: 567.2, size: 8 },
   darurat_nama: { page: 0, x: 247, y: 567.2, size: 8 },
   darurat_hubungan: { page: 0, x: 412, y: 567.2, size: 8 },
 
