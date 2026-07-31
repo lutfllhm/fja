@@ -136,20 +136,24 @@ const TABLE_LAYOUTS = {
     rowHeight: 10.45,
     maxRows: 11,
     maxLinesPerRow: 1,
-    drawSeparators: true,
     // Raised from 4.25pt: that size was hard to read once shrinking bottomed out
     // (e.g. "Instansi Pemerintahan" in the 50pt-wide jenis_perusahaan column). Frontend
     // now caps input length per column (see FAMILY_COLUMNS in frontend/pages/apply/index.tsx)
     // so text should rarely need to shrink this far; anything longer truncates with "…" instead.
     minSize: 5.5,
+    // Widths measured by rendering the blank template to an image and detecting the
+    // actual vertical gridline pixel positions (columns sit at pdf-x ~21, 78, 221, 246,
+    // 331, 411, 468, 523, 573). 'lp' and 'jabatan' previously used widths far larger than
+    // the real gap to the next gridline (38pt vs ~19.5pt real, 55pt vs ~40pt real), so
+    // text in those columns could render past the line. Widths below leave a small margin.
     columns: [
-      { key: 'nama', x: 125.7, width: 95 },
-      { key: 'lp', x: 226.5, width: 38 },
-      { key: 'ttl_umur', x: 248, width: 80, minSize: 4.25 },
-      { key: 'pendidikan', x: 338.5, width: 80 },
-      { key: 'pekerjaan', x: 423.5, width: 44 },
-      { key: 'jenis_perusahaan', x: 476.6, width: 50 },
-      { key: 'jabatan', x: 532.9, width: 55 },
+      { key: 'nama', x: 125.7, width: 92 },
+      { key: 'lp', x: 226.5, width: 16 },
+      { key: 'ttl_umur', x: 248, width: 78, minSize: 4.25 },
+      { key: 'pendidikan', x: 338.5, width: 68 },
+      { key: 'pekerjaan', x: 423.5, width: 41 },
+      { key: 'jenis_perusahaan', x: 476.6, width: 42 },
+      { key: 'jabatan', x: 532.9, width: 36 },
     ],
   },
   keluarga_asal: {
@@ -159,15 +163,14 @@ const TABLE_LAYOUTS = {
     maxRows: 12,
     maxLinesPerRow: 1,
     minSize: 5.5,
-    drawSeparators: true,
     columns: [
-      { key: 'nama', x: 125.7, width: 95 },
-      { key: 'lp', x: 226.5, width: 38 },
-      { key: 'ttl_umur', x: 248, width: 80, minSize: 4.25 },
-      { key: 'pendidikan', x: 338.5, width: 80 },
-      { key: 'pekerjaan', x: 423.5, width: 44 },
-      { key: 'jenis_perusahaan', x: 476.6, width: 50 },
-      { key: 'jabatan', x: 532.9, width: 55 },
+      { key: 'nama', x: 125.7, width: 92 },
+      { key: 'lp', x: 226.5, width: 16 },
+      { key: 'ttl_umur', x: 248, width: 78, minSize: 4.25 },
+      { key: 'pendidikan', x: 338.5, width: 68 },
+      { key: 'pekerjaan', x: 423.5, width: 41 },
+      { key: 'jenis_perusahaan', x: 476.6, width: 42 },
+      { key: 'jabatan', x: 532.9, width: 36 },
     ],
   },
   bahasa: {
@@ -197,7 +200,6 @@ const TABLE_LAYOUTS = {
     startY: 637.2,
     rowHeight: 10.45,
     maxRows: 4,
-    drawSeparators: true,
     columns: [
       { key: 'nama', x: 26, width: 92 },
       { key: 'perusahaan', x: 126, width: 116 },
@@ -211,12 +213,16 @@ const TABLE_LAYOUTS = {
     startY: 501.5,
     rowHeight: 10.45,
     maxRows: 5,
-    drawSeparators: true,
+    // Widths were measured by rendering the blank template to an image and detecting
+    // the actual vertical gridline pixel positions (columns sit at pdf-x ~21, 151, 299,
+    // 468, 573). nama_organisasi and tempat previously used widths larger than the real
+    // gap to the next gridline, so long values (e.g. "Karang Taruna (Organisasi Sosial)")
+    // rendered right up to / past the line. Widths below leave a ~5pt margin before it.
     columns: [
-      { key: 'nama_organisasi', x: 59, width: 110 },
-      { key: 'tempat', x: 213, width: 95 },
-      { key: 'jabatan', x: 370, width: 95 },
-      { key: 'tahun', x: 511, width: 60 },
+      { key: 'nama_organisasi', x: 59, width: 87 },
+      { key: 'tempat', x: 213, width: 81 },
+      { key: 'jabatan', x: 370, width: 93 },
+      { key: 'tahun', x: 511, width: 57 },
     ],
   },
 };
@@ -461,30 +467,6 @@ function wrapCell(value, font, size, width, maxLines) {
 }
 
 /**
- * Draws the vertical column separators for one table row. The template's own
- * printed grid lines are not reliably present on every row (some rows print with
- * the separator faint or missing, letting long-but-in-bounds cell text read as if
- * it crossed into the next column) — so instead of trusting the template art, we
- * draw our own separator at the midpoint between each column and the next, for
- * every row we actually write data into. That guarantees a consistent boundary
- * regardless of what the underlying template looks like at that row.
- */
-function drawColumnSeparators(page, layout, y) {
-  const cols = layout.columns;
-  for (let c = 0; c < cols.length - 1; c += 1) {
-    const gapStart = cols[c].x + cols[c].width;
-    const gapEnd = cols[c + 1].x;
-    const lineX = (gapStart + gapEnd) / 2;
-    page.drawLine({
-      start: { x: lineX, y: y + layout.rowHeight * 0.15 },
-      end: { x: lineX, y: y - layout.rowHeight * 0.85 },
-      thickness: 0.5,
-      color: rgb(0.6, 0.6, 0.6),
-    });
-  }
-}
-
-/**
  * Draws a table whose rows sit on the fixed grid lines printed on the template
  * (rowHeight apart). Each cell shrinks its font size (down to `minSize`) to try
  * to fit on one line first — this table's rows are only ~10.4pt tall, so a second
@@ -506,7 +488,6 @@ function drawTable(pages, font, layoutKey, rows) {
     const i = layout.rowMap?.[dataIndex] ?? dataIndex;
     if (i >= layout.maxRows) return;
     const y = layout.startY - i * layout.rowHeight;
-    if (layout.drawSeparators) drawColumnSeparators(page, layout, y);
     layout.columns.forEach((col) => {
       if (col.skipRows?.includes(i)) return;
       const value = formatValue(row[col.key]);
