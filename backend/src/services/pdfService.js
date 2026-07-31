@@ -206,11 +206,29 @@ const TABLE_LAYOUTS = {
   },
 };
 
+// The template is filled with the standard Helvetica font, which only supports the
+// WinAnsi character set. Text pasted from Word/WhatsApp often carries characters
+// outside that set (smart quotes, em-dashes, bullets, emoji), which used to crash
+// PDF generation entirely (pdf-lib throws "WinAnsi cannot encode ..."). Map the common
+// ones to their WinAnsi equivalent and fall back to "?" for anything else unsupported.
+const UNICODE_TO_WINANSI = {
+  '‘': "'", '’': "'", '“': '"', '”': '"',
+  '–': '-', '—': '-', '…': '...',
+  '•': '-', '●': '-', '○': '-', '‣': '-',
+};
+const WINANSI_SAFE = /^[\x00-\xFF]*$/;
+
+function sanitizeForWinAnsi(text) {
+  let result = text.replace(/[‘’“”–—…•●○‣]/g, (ch) => UNICODE_TO_WINANSI[ch]);
+  if (WINANSI_SAFE.test(result)) return result;
+  return Array.from(result).map((ch) => (WINANSI_SAFE.test(ch) ? ch : '?')).join('');
+}
+
 function formatValue(value) {
   if (value === null || value === undefined || value === '') return '';
   if (typeof value === 'boolean') return value ? 'Ya' : 'Tidak';
   if (typeof value === 'object') return JSON.stringify(value);
-  return String(value).substring(0, 2000);
+  return sanitizeForWinAnsi(String(value).substring(0, 2000));
 }
 
 // Breaks a single word wider than `maxWidth` into character chunks that each fit.
