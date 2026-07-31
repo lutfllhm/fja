@@ -4,6 +4,7 @@ interface Column {
   key: string;
   label: string;
   locked?: boolean;
+  maxLength?: number;
 }
 
 interface DynamicTableProps {
@@ -58,6 +59,7 @@ export default function DynamicTable({
                       <input
                         value={row[col.key] ?? ''}
                         onChange={(e) => updateCell(index, col.key, e.target.value)}
+                        maxLength={col.maxLength}
                         className="form-input"
                         style={{ height: 28, fontSize: '11.5px' }}
                       />

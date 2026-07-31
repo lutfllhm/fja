@@ -448,30 +448,33 @@ function SignaturePad({ label, onChange }: SignaturePadProps) {
   );
 }
 
+// maxLength per column is capped to what still fits the narrow PDF table columns
+// at a readable font size (~6pt), so text is never forced to shrink illegibly or
+// get cut off when printed. See TABLE_LAYOUTS in backend/src/services/pdfService.js.
 const FAMILY_COLUMNS = [
   { key: 'status', label: 'Status', locked: true },
-  { key: 'nama', label: 'Nama Lengkap' },
-  { key: 'lp', label: 'L/P' },
-  { key: 'ttl_umur', label: 'TTL / Umur' },
-  { key: 'pendidikan', label: 'Pendidikan Terakhir' },
-  { key: 'pekerjaan', label: 'Pekerjaan' },
-  { key: 'jenis_perusahaan', label: 'Jenis Perusahaan' },
-  { key: 'jabatan', label: 'Jabatan / Posisi' },
+  { key: 'nama', label: 'Nama Lengkap', maxLength: 40 },
+  { key: 'lp', label: 'L/P', maxLength: 1 },
+  { key: 'ttl_umur', label: 'TTL / Umur', maxLength: 32 },
+  { key: 'pendidikan', label: 'Pendidikan Terakhir', maxLength: 32 },
+  { key: 'pekerjaan', label: 'Pekerjaan', maxLength: 15 },
+  { key: 'jenis_perusahaan', label: 'Jenis Perusahaan', maxLength: 17 },
+  { key: 'jabatan', label: 'Jabatan / Posisi', maxLength: 19 },
 ];
 
 const REFERENSI_COLUMNS = [
-  { key: 'nama', label: 'Nama' },
-  { key: 'perusahaan', label: 'Perusahaan' },
-  { key: 'alamat', label: 'Alamat' },
-  { key: 'telepon', label: 'No. Telepon' },
-  { key: 'hubungan', label: 'Hubungan' },
+  { key: 'nama', label: 'Nama', maxLength: 36 },
+  { key: 'perusahaan', label: 'Perusahaan', maxLength: 46 },
+  { key: 'alamat', label: 'Alamat', maxLength: 42 },
+  { key: 'telepon', label: 'No. Telepon', maxLength: 20 },
+  { key: 'hubungan', label: 'Hubungan', maxLength: 36 },
 ];
 
 const AKTIVITAS_COLUMNS = [
-  { key: 'nama_organisasi', label: 'Nama Organisasi' },
-  { key: 'tempat', label: 'Tempat' },
-  { key: 'jabatan', label: 'Jabatan' },
-  { key: 'tahun', label: 'Tahun' },
+  { key: 'nama_organisasi', label: 'Nama Organisasi', maxLength: 38 },
+  { key: 'tempat', label: 'Tempat', maxLength: 33 },
+  { key: 'jabatan', label: 'Jabatan', maxLength: 33 },
+  { key: 'tahun', label: 'Tahun', maxLength: 12 },
 ];
 
 const SKILL_LEVELS = ['Baik', 'Cukup', 'Kurang'];

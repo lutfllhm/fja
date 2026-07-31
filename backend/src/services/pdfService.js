@@ -136,11 +136,15 @@ const TABLE_LAYOUTS = {
     rowHeight: 10.45,
     maxRows: 11,
     maxLinesPerRow: 1,
-    minSize: 4.25,
+    // Raised from 4.25pt: that size was hard to read once shrinking bottomed out
+    // (e.g. "Instansi Pemerintahan" in the 50pt-wide jenis_perusahaan column). Frontend
+    // now caps input length per column (see FAMILY_COLUMNS in frontend/pages/apply/index.tsx)
+    // so text should rarely need to shrink this far; anything longer truncates with "…" instead.
+    minSize: 5.5,
     columns: [
       { key: 'nama', x: 125.7, width: 95 },
       { key: 'lp', x: 226.5, width: 38 },
-      { key: 'ttl_umur', x: 248, width: 80, minSize: 3.5 },
+      { key: 'ttl_umur', x: 248, width: 80, minSize: 4.25 },
       { key: 'pendidikan', x: 338.5, width: 80 },
       { key: 'pekerjaan', x: 423.5, width: 44 },
       { key: 'jenis_perusahaan', x: 476.6, width: 50 },
@@ -153,11 +157,11 @@ const TABLE_LAYOUTS = {
     rowHeight: 10.45,
     maxRows: 12,
     maxLinesPerRow: 1,
-    minSize: 4.25,
+    minSize: 5.5,
     columns: [
       { key: 'nama', x: 125.7, width: 95 },
       { key: 'lp', x: 226.5, width: 38 },
-      { key: 'ttl_umur', x: 248, width: 80, minSize: 3.5 },
+      { key: 'ttl_umur', x: 248, width: 80, minSize: 4.25 },
       { key: 'pendidikan', x: 338.5, width: 80 },
       { key: 'pekerjaan', x: 423.5, width: 44 },
       { key: 'jenis_perusahaan', x: 476.6, width: 50 },
@@ -168,21 +172,23 @@ const TABLE_LAYOUTS = {
     page: 1,
     startY: 717.0,
     rowHeight: 10.45,
-    maxRows: 5,
-    // Rows 0-2 (Indonesia/Inggris/Mandarin) already have their language name
-    // pre-printed on the template, so skip the 'bahasa' column for those rows
-    // to avoid drawing overlapping text on top of it. Row 3 prints the label
-    // "Bahasa Lain:" instead of a language name, so its value is offset to the
-    // right of that label (narrower width) rather than skipped/overlapping it.
+    // Template rows: 0-2 = Indonesia/Inggris/Mandarin (name pre-printed), 3 = the
+    // "Bahasa Lain:" section label (always blank), 4-5 = blank "-" rows where
+    // user-added extra languages actually get written. See rowMap below.
+    maxRows: 6,
+    // Rows 0-2 already have their language name pre-printed on the template, so skip
+    // the 'bahasa' column for those rows to avoid drawing text on top of it. Row 3 is
+    // the "Bahasa Lain:" label row itself and must stay fully blank.
     columns: [
-      {
-        key: 'bahasa', x: 22.9, width: 95, skipRows: [0, 1, 2],
-        rowOverrides: { 3: { x: 62, width: 55 } },
-      },
+      { key: 'bahasa', x: 22.9, width: 95, skipRows: [0, 1, 2, 3] },
       { key: 'bicara', x: 133, width: 95 },
       { key: 'membaca', x: 294, width: 95 },
       { key: 'menulis', x: 461, width: 95 },
     ],
+    // formData.bahasa[3] is the user's first added "Bahasa Lain" entry, but on the
+    // template that lands on row index 4 (row 3 is the label itself) — same for [4]->5.
+    // Maps data array index -> template row index; identity for indices not listed.
+    rowMap: { 3: 4, 4: 5 },
   },
   referensi: {
     page: 2,
@@ -468,7 +474,9 @@ function drawTable(pages, font, layoutKey, rows) {
   const minSize = layout.minSize || 5.5;
   const maxLinesPerRow = layout.maxLinesPerRow || 2;
 
-  rows.slice(0, layout.maxRows).forEach((row, i) => {
+  rows.forEach((row, dataIndex) => {
+    const i = layout.rowMap?.[dataIndex] ?? dataIndex;
+    if (i >= layout.maxRows) return;
     const y = layout.startY - i * layout.rowHeight;
     layout.columns.forEach((col) => {
       if (col.skipRows?.includes(i)) return;
