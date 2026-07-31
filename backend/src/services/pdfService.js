@@ -171,9 +171,14 @@ const TABLE_LAYOUTS = {
     maxRows: 5,
     // Rows 0-2 (Indonesia/Inggris/Mandarin) already have their language name
     // pre-printed on the template, so skip the 'bahasa' column for those rows
-    // to avoid drawing overlapping text on top of it.
+    // to avoid drawing overlapping text on top of it. Row 3 prints the label
+    // "Bahasa Lain:" instead of a language name, so its value is offset to the
+    // right of that label (narrower width) rather than skipped/overlapping it.
     columns: [
-      { key: 'bahasa', x: 22.9, width: 95, skipRows: [0, 1, 2] },
+      {
+        key: 'bahasa', x: 22.9, width: 95, skipRows: [0, 1, 2],
+        rowOverrides: { 3: { x: 62, width: 55 } },
+      },
       { key: 'bicara', x: 133, width: 95 },
       { key: 'membaca', x: 294, width: 95 },
       { key: 'menulis', x: 461, width: 95 },
@@ -470,16 +475,17 @@ function drawTable(pages, font, layoutKey, rows) {
       const value = formatValue(row[col.key]);
       if (!value) return;
 
+      const { x, width } = { x: col.x, width: col.width, ...col.rowOverrides?.[i] };
       const colMinSize = col.minSize || minSize;
       let size = baseSize;
-      while (size > colMinSize && font.widthOfTextAtSize(value, size) > col.width) {
+      while (size > colMinSize && font.widthOfTextAtSize(value, size) > width) {
         size -= 0.25;
       }
       const lineHeight = Math.min(size * 1.05, layout.rowHeight / maxLinesPerRow - 0.5);
-      const lines = wrapCell(value, font, size, col.width, maxLinesPerRow);
+      const lines = wrapCell(value, font, size, width, maxLinesPerRow);
       lines.forEach((line, lineIdx) => {
         page.drawText(line, {
-          x: col.x,
+          x,
           y: y - lineIdx * lineHeight,
           size,
           font,
