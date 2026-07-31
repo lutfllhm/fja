@@ -136,6 +136,7 @@ const TABLE_LAYOUTS = {
     rowHeight: 10.45,
     maxRows: 11,
     maxLinesPerRow: 1,
+    drawSeparators: true,
     // Raised from 4.25pt: that size was hard to read once shrinking bottomed out
     // (e.g. "Instansi Pemerintahan" in the 50pt-wide jenis_perusahaan column). Frontend
     // now caps input length per column (see FAMILY_COLUMNS in frontend/pages/apply/index.tsx)
@@ -158,6 +159,7 @@ const TABLE_LAYOUTS = {
     maxRows: 12,
     maxLinesPerRow: 1,
     minSize: 5.5,
+    drawSeparators: true,
     columns: [
       { key: 'nama', x: 125.7, width: 95 },
       { key: 'lp', x: 226.5, width: 38 },
@@ -195,6 +197,7 @@ const TABLE_LAYOUTS = {
     startY: 637.2,
     rowHeight: 10.45,
     maxRows: 4,
+    drawSeparators: true,
     columns: [
       { key: 'nama', x: 26, width: 92 },
       { key: 'perusahaan', x: 126, width: 116 },
@@ -208,6 +211,7 @@ const TABLE_LAYOUTS = {
     startY: 501.5,
     rowHeight: 10.45,
     maxRows: 5,
+    drawSeparators: true,
     columns: [
       { key: 'nama_organisasi', x: 59, width: 110 },
       { key: 'tempat', x: 213, width: 95 },
@@ -457,6 +461,30 @@ function wrapCell(value, font, size, width, maxLines) {
 }
 
 /**
+ * Draws the vertical column separators for one table row. The template's own
+ * printed grid lines are not reliably present on every row (some rows print with
+ * the separator faint or missing, letting long-but-in-bounds cell text read as if
+ * it crossed into the next column) — so instead of trusting the template art, we
+ * draw our own separator at the midpoint between each column and the next, for
+ * every row we actually write data into. That guarantees a consistent boundary
+ * regardless of what the underlying template looks like at that row.
+ */
+function drawColumnSeparators(page, layout, y) {
+  const cols = layout.columns;
+  for (let c = 0; c < cols.length - 1; c += 1) {
+    const gapStart = cols[c].x + cols[c].width;
+    const gapEnd = cols[c + 1].x;
+    const lineX = (gapStart + gapEnd) / 2;
+    page.drawLine({
+      start: { x: lineX, y: y + layout.rowHeight * 0.15 },
+      end: { x: lineX, y: y - layout.rowHeight * 0.85 },
+      thickness: 0.5,
+      color: rgb(0.6, 0.6, 0.6),
+    });
+  }
+}
+
+/**
  * Draws a table whose rows sit on the fixed grid lines printed on the template
  * (rowHeight apart). Each cell shrinks its font size (down to `minSize`) to try
  * to fit on one line first — this table's rows are only ~10.4pt tall, so a second
@@ -478,6 +506,7 @@ function drawTable(pages, font, layoutKey, rows) {
     const i = layout.rowMap?.[dataIndex] ?? dataIndex;
     if (i >= layout.maxRows) return;
     const y = layout.startY - i * layout.rowHeight;
+    if (layout.drawSeparators) drawColumnSeparators(page, layout, y);
     layout.columns.forEach((col) => {
       if (col.skipRows?.includes(i)) return;
       const value = formatValue(row[col.key]);
