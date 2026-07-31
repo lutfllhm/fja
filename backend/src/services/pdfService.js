@@ -213,16 +213,17 @@ const TABLE_LAYOUTS = {
     startY: 501.5,
     rowHeight: 10.45,
     maxRows: 5,
-    // Widths were measured by rendering the blank template to an image and detecting
+    // x/width were measured by rendering the blank template to an image and detecting
     // the actual vertical gridline pixel positions (columns sit at pdf-x ~21, 151, 299,
-    // 468, 573). nama_organisasi and tempat previously used widths larger than the real
-    // gap to the next gridline, so long values (e.g. "Karang Taruna (Organisasi Sosial)")
-    // rendered right up to / past the line. Widths below leave a ~5pt margin before it.
+    // 468, 573). tempat/jabatan/tahun previously used the centered header label's x,
+    // which sits mid-column, so their values rendered starting mid-column instead of
+    // flush left like nama_organisasi. x is now set at the same left-padding offset
+    // used for nama_organisasi (its gridline is at 21, text starts at 59 -> 38pt pad).
     columns: [
       { key: 'nama_organisasi', x: 59, width: 87 },
-      { key: 'tempat', x: 213, width: 81 },
-      { key: 'jabatan', x: 370, width: 93 },
-      { key: 'tahun', x: 511, width: 57 },
+      { key: 'tempat', x: 189, width: 105 },
+      { key: 'jabatan', x: 337, width: 126 },
+      { key: 'tahun', x: 506, width: 62 },
     ],
   },
 };
