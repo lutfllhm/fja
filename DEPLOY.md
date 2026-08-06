@@ -224,3 +224,33 @@ docker compose exec db mysqldump -uroot -p"$DB_PASSWORD" foa > backup_$(date +%F
 # Masuk shell container
 docker compose exec backend sh
 ```
+
+## Restore database dari backup
+
+Upload dulu file backup (mis. `backup_agustus.sql`) ke VPS, dari komputer lokal:
+
+```bash
+scp backup_agustus.sql root@<IP_VPS_KAMU>:/opt/fja/
+```
+
+Lalu di VPS, restore ke container `db`:
+
+```bash
+cd /opt/apps/fja
+
+docker compose exec -T db mysql -uroot -p"$DB_PASSWORD" foa < backup_agustus.sql
+```
+
+> `$DB_PASSWORD` harus sama dengan nilai di `.env`. Kalau env var belum ke-load di shell, jalankan `export $(grep DB_PASSWORD .env)` dulu, atau ganti `"$DB_PASSWORD"` dengan password aslinya langsung.
+
+Catatan:
+
+- Restore ini **menimpa** data yang sudah ada di tabel yang sama (dump berisi `DROP TABLE` / `INSERT` untuk tabel `applications`, `admins`, dll). Pastikan ini memang yang diinginkan — kalau perlu, backup dulu data yang sedang jalan sebelum restore (lihat perintah backup di atas).
+- Flag `-T` wajib dipakai supaya `docker compose exec` tidak mengalokasikan pseudo-TTY, karena input datang dari redirect file (`<`), bukan interaktif.
+- Setelah restore, cek datanya masuk:
+
+```bash
+docker compose exec db mysql -uroot -p"$DB_PASSWORD" foa -e "SELECT COUNT(*) FROM applications;"
+```
+
+- Kalau backend/frontend sedang jalan dan datanya sudah beda, tidak perlu restart container — cukup refresh saja karena koneksi ke DB tetap sama.
